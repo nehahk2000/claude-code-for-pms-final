@@ -122,3 +122,17 @@ down; the config doesn't distinguish. Unanswered.
 - Availability Confidence was committed for 4.2 but did not ship. The roadmap still lists it as Committed.
 - Confidence in the cause is about 55 out of 95. Not yet checked: pings per responder before and after (tests "phone never goes off"), missed pings by responder, the support_tickets table, data quality, and the unexplained 14% callout drop.
 - Open question for the staff engineer: do the new ranking weights apply to responders who turn jobs down? Also ask the Director of Product which squeezed-out items are still Q3 commitments.
+
+**Skipped responders and interviews (added after Module 1 wrap-up)**
+- Four handler interviews (Research section, 2 to 5 Sep, recorded for console redesign, not pings): 3 of 4 handlers described offers gone before the responder could answer (problem #5). Kip described Meteor Mite's phone silent while The Gale never stops. Some answers were prompted by the interviewer. Handlers speak for responders.
+- Four responders are being passed over in their own areas: Farlight (Uptown), The Undertow (Harborside), Vesper (Old Town), Meteor Mite (Eastgate, shared with The Gale). Share of callouts in their areas where they were pinged: about 80% through 10 Aug, then 30% (17 Aug), 8% (24 Aug), 4% (31 Aug). Gradual, not a step. Their accepted rate fell from 69 to 81% down to 18 to 29%.
+- Callouts where the home-area responder looked free but was never pinged: about 18 before 4.2, 84 after (shorter period). "Free" is a proxy (no other ping in the prior 30 minutes); availability status is not in the database.
+- Out-of-area first pings went from 20% to 39% of callouts after 4.2, the opposite of what the heavier proximity weight intended. Before, every out-of-area first ping was turned down or missed. After, 36% were taken.
+- Cause unproven. By my reading of the code, a floor acceptance score alone should not drop a home responder below distant ones at proximity weight 0.60, so ask the staff engineer about availability status, travel-time estimates and capability tags for these four. Confidence in the problem-statement link is about 70 out of 95.
+- Still: 11 responders pinged within 5 minutes of accepting (6 accepted again); whether engaged status blocks pings is unanswered. Halloran's Supply issues (11-day requisition, failure reports, catalog search) belong to Supply.
+
+**Interviews, filters and metrics (second wrap-up)**
+- Interview themes across the four handlers: offer gone before answering 3 of 4; alerts hard to notice or tell apart 3 of 4; text too small 2 of 4; uneven workload 2 of 4; filters resetting without warning, no dark mode, and Supply issues 1 of 4 each.
+- Console filters have no spec in the wiki. Ambrose filters the coverage view by capability tags. They change what a handler sees, not who gets pinged.
+- The Dispatch one-pager defines three metrics: acceptance rate, time-to-accept (median seconds from ping sent to taken) and coverage gap. Time-to-accept is not in the database; ask Engineering for it. The one-pager says a taken ping marks the responder engaged; no cooldown was found in the config.
+- The user wants to understand how 4.2 came about. The interviews on file are from September (after 4.2) and are for the console redesign. The research that led to 4.2 has not been found.

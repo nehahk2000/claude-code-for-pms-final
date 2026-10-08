@@ -60,3 +60,24 @@ add this comparison to CLAUDE.md
 
 ### 13.
 before we move forward, i want to get a read from you, how confident are you in your understanding of the problem statements, the data, and how the data correlates with the problem statements. give me your score on a scale of 0-95, and lets figure out how to improve your confidence together
+
+### 14.
+based on everything now you know about Rook, what should I be worried about that nobody has told me?
+
+### 15.
+hard to understand ,Re-frame it based on the problem statement we have been working on. Start the statement as "I am a" and then add evidence columns and low, medium and how sure
+
+### 16.
+what are the filters?
+
+### 17.
+When a handler gets a ping and they accept it, do they still show available after accepting it? Also, when a handler finishes the task, how much time should  they mandatory wait to get another ping?
+
+### 18.
+are all these 11 cases very close to the proximity or were far?
+
+### 19.
+yes, can we take alook at the cases where the pings went out of the area while other near by was shown available
+
+### 20.
+Lets take a step back and align on what I need from you.  In order to best understand how even we arrived at 4.2,I want to better understand the research from customer interviews . Before you share anything, interview me so that you understand what I require as a Product manager at Rook industries responsible for all things Dispatch
