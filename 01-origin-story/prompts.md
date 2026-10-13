@@ -81,3 +81,57 @@ yes, can we take alook at the cases where the pings went out of the area while o
 
 ### 20.
 Lets take a step back and align on what I need from you.  In order to best understand how even we arrived at 4.2,I want to better understand the research from customer interviews . Before you share anything, interview me so that you understand what I require as a Product manager at Rook industries responsible for all things Dispatch
+
+### 21.
+Within the repo or notion notebook, is there any data around the call out history that has ping information.
+
+### 22.
+ok use  the data that is there in pings. Every row is one responder in one week: how many times we pinged them, and how many of those they took. Release 4.2 shipped on 12 August. Tell me what changed after that date. Show me the weekly numbers before and after, and show me the rows you used to get them.
+
+### 23.
+what was changed when pings went to the responders. Did handler immediately pinged them and what was the duration when they could accept the ping before and after release
+
+### 24.
+what is the last column that says responders pinged?
+
+### 25.
+Did anything change in the farlight database or data related to farlight ?
+
+### 26.
+pull all the tickets and see if it matches the narrative and the data
+
+### 27.
+when someone missed the ping  first time, does it impact the pings that they get even though they are available
+
+### 28.
+add this to CLAUDE.md
+
+### 29.
+what were the call outs in the area
+
+### 30.
+can we callouts column  in the above table for farlight
+
+### 31.
+ran the same query who did not go quiet
+
+### 32.
+this is interesting, vantage has a home base but also gets pings in different area. Is there a way we can visualize this on some kind of map/visualization to show the blasts of pings pre 4.2 and post 4.2
+
+### 33.
+and also who the pings was origniallt send to but who ended up taking it instead and the respective home bases as well to see which heros accepted pings in location outside their homebase
+
+### 34.
+add the npbody took it flow and then make this blast maps a sharable artifact
+
+### 35.
+looking at the data this way, it almost feels like location no longer matters, was that intentional as part of 4.2 and does it change anything with the analysis we have been putting together
+
+### 36.
+publish it as a shareable artifact
+
+### 37.
+add the other findings to CLAUDE.md including all visualization and blasts maps
+
+### 38.
+Also, tell me what area was least impacted where the pings did not go outside or missed a whole lot. Provide all this information area wise
