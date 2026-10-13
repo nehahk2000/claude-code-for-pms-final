@@ -1,0 +1,176 @@
+<title>Ping blast maps</title>
+<style>
+:root{--bg:#faf9f5;--surface:#ffffff;--text:#1f1e1d;--text-2:#5c5b57;--border:rgba(31,30,29,.15);--border-strong:rgba(31,30,29,.35);--pre:#378ADD;--post:#D85A30;--none:#A32D2D;--ok:#1D9E75}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1a19;--surface:#242422;--text:#f0efec;--text-2:#b4b2a9;--border:rgba(255,255,255,.14);--border-strong:rgba(255,255,255,.35);--none:#F09595;color-scheme:dark}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#1a1a19;--surface:#242422;--text:#f0efec;--text-2:#b4b2a9;--border:rgba(255,255,255,.14);--border-strong:rgba(255,255,255,.35);--none:#F09595}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:0 auto;padding-block:24px 56px;padding-inline:16px}
+h1{font-size:24px;font-weight:500;margin:0 0 4px}
+h2{font-size:18px;font-weight:500;margin:36px 0 4px}
+p{margin:0 0 12px}
+.sub{color:var(--text-2);font-size:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0}
+.tile{background:var(--surface);border:.5px solid var(--border);border-radius:12px;padding:12px 16px}
+.tile .l{font-size:13px;color:var(--text-2)}
+.tile .v{font-size:24px;font-weight:500}
+.tile .v small{font-size:14px;color:var(--text-2);font-weight:400}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+button,select{font:inherit;font-size:14px;color:var(--text);background:transparent;border:.5px solid var(--border-strong);border-radius:8px;padding:6px 12px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--surface);border-color:var(--text)}
+label.chk{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text-2)}
+.readout{font-size:14px;color:var(--text-2);min-height:44px}
+.readout b{color:var(--text);font-weight:500}
+.scroll{overflow-x:auto}
+svg{width:100%;min-width:560px;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--text-2);margin-top:4px}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0 12px}
+th,td{text-align:left;padding:6px 8px;border-bottom:.5px solid var(--border)}
+th{font-weight:500;color:var(--text-2)}
+td.n,th.n{text-align:right}
+.note{font-size:13px;color:var(--text-2)}
+#areas tr.best td{background:rgba(29,158,117,.16)}
+#areas tr.quiet td{background:rgba(216,90,48,.16)}
+#areas tr.unfilled td{background:rgba(163,45,45,.14)}
+</style>
+<main>
+<h1>Ping blast maps</h1>
+<p class="sub">Rook Dispatch, 29 Jun to 6 Sep 2026. Release 4.2 shipped 12 Aug. Source: the Rook database (pings, callouts, responders). Fictional teaching scenario.</p>
+
+<div class="tiles">
+  <div class="tile"><div class="l">Pings outside home area, per week</div><div class="v">30 <small>before</small> to 65 <small>after</small></div></div>
+  <div class="tile"><div class="l">Callouts taken outside the responder's home</div><div class="v">0 <small>before</small> to 86 <small>after</small></div></div>
+  <div class="tile"><div class="l">Callouts nobody took</div><div class="v">5.5% <small>before</small> to 11.1% <small>after</small></div></div>
+</div>
+
+<h2>Where pings went</h2>
+<p class="sub">Each line runs from the area where a callout happened to the home area of a responder who was pinged for it from outside. Thicker means more pings per week. Positions are schematic, not real geography.</p>
+<div class="controls">
+  <button id="m-pre" aria-pressed="false">Before 4.2</button>
+  <button id="m-post" aria-pressed="false">After 4.2</button>
+  <button id="m-both" aria-pressed="true">Overlay</button>
+  <label class="chk"><input type="checkbox" id="nobody"> Show "nobody took it" flow</label>
+  <select id="who" aria-label="Highlight a responder"></select>
+</div>
+<div class="readout" id="readout"></div>
+<div class="scroll"><svg id="map" viewBox="0 0 680 600" role="img" aria-label="Circle of 15 city areas with arcs showing pings sent to responders from other areas, and optionally callouts nobody took"></svg></div>
+<div class="legend">
+  <span><i style="background:var(--pre)"></i>Before 4.2 (29 Jun to 11 Aug)</span>
+  <span><i style="background:var(--post)"></i>After 4.2 (12 Aug to 6 Sep)</span>
+  <span><i style="background:var(--none)"></i>Callouts nobody took</span>
+  <span>Orange ring: responder who went quiet at home</span>
+</div>
+
+<h2>Who took pings outside their home base</h2>
+<p class="sub">After 4.2, 86 callouts were taken by someone away from home. Before 4.2, none were. All 86 were in the home areas of three responders who had gone quiet. Line thickness is the number of callouts accepted.</p>
+<div class="scroll"><svg id="flow" viewBox="0 0 680 580" role="img" aria-label="Nine responders took 86 callouts in Old Town, Uptown and Harborside, the home areas of Vesper, Farlight and The Undertow"></svg></div>
+<p class="note">51 of the 86 were taken by the responder pinged first. In 35 cases the first responder declined or missed and the callout passed to someone else. Vesper, Farlight and The Undertow were rarely the one asked, and took 5, 2 and 3 of the callouts in their own areas.</p>
+
+<h2>Callouts nobody took</h2>
+<p class="sub">Callouts where no ping was accepted, by area where the callout happened.</p>
+<table id="tbl"></table>
+<p class="note">Before 4.2, 48 of 879 callouts went untaken. After, 49 of 440. In both periods, most of these (42 of 48, and 40 of 49) had only one ping sent, so the chain stopped after a single responder. That is worth asking Engineering about, since the routing code is meant to keep offering down the list.</p>
+
+<h2>Area by area</h2>
+<p class="sub">Percentages are by where the callout happened. Before 4.2 is 29 Jun to 11 Aug, after is 12 Aug to 6 Sep. Home responder pinged was 100% in every area before 4.2.</p>
+<div class="scroll"><table id="areas" style="min-width:640px">
+<tr><th>Area</th><th>Home responder</th><th class="n">Callouts before / after</th><th class="n">First ping outside the area</th><th class="n">Home responder pinged, after</th><th class="n">Missed pings</th><th class="n">Callouts nobody took</th><th class="n">Taken by an outsider, after</th></tr>
+<tr class="best"><td>Foundry Row</td><td>Sgt. Bulwark</td><td class="n">44 / 22</td><td class="n">23% to 32%</td><td class="n">100%</td><td class="n">2% to 10%</td><td class="n">2% to 5%</td><td class="n">0</td></tr>
+<tr class="unfilled"><td>Kingsbridge</td><td>Sgt. Falkirk</td><td class="n">54 / 28</td><td class="n">22% to 14%</td><td class="n">100%</td><td class="n">6% to 12%</td><td class="n">7% to 21%</td><td class="n">0</td></tr>
+<tr><td>Mill District</td><td>Cindermark</td><td class="n">46 / 22</td><td class="n">15% to 32%</td><td class="n">100%</td><td class="n">0% to 13%</td><td class="n">2% to 9%</td><td class="n">0</td></tr>
+<tr><td>Northfield</td><td>Corporal Ashgrove</td><td class="n">52 / 21</td><td class="n">21% to 38%</td><td class="n">100%</td><td class="n">2% to 13%</td><td class="n">6% to 10%</td><td class="n">0</td></tr>
+<tr><td>Greenway</td><td>The Drift</td><td class="n">36 / 16</td><td class="n">22% to 38%</td><td class="n">100%</td><td class="n">0% to 14%</td><td class="n">8% to 13%</td><td class="n">0</td></tr>
+<tr><td>Hillcrest</td><td>Captain Vantage</td><td class="n">59 / 30</td><td class="n">8% to 27%</td><td class="n">100%</td><td class="n">3% to 16%</td><td class="n">5% to 7%</td><td class="n">0</td></tr>
+<tr><td>Eastgate</td><td>Meteor Mite, The Gale</td><td class="n">118 / 57</td><td class="n">17% to 16%</td><td class="n">100%</td><td class="n">3% to 17%</td><td class="n">5% to 11%</td><td class="n">0</td></tr>
+<tr><td>Midtown</td><td>Nightwell</td><td class="n">76 / 38</td><td class="n">36% to 45%</td><td class="n">100%</td><td class="n">3% to 17%</td><td class="n">5% to 11%</td><td class="n">0</td></tr>
+<tr><td>Westbury</td><td>Halfmoon</td><td class="n">56 / 23</td><td class="n">18% to 22%</td><td class="n">100%</td><td class="n">0% to 18%</td><td class="n">11% to 9%</td><td class="n">0</td></tr>
+<tr><td>Lakeshore</td><td>The Longcast</td><td class="n">35 / 19</td><td class="n">20% to 26%</td><td class="n">100%</td><td class="n">2% to 19%</td><td class="n">3% to 11%</td><td class="n">0</td></tr>
+<tr class="unfilled"><td>Southport</td><td>Stormwrack</td><td class="n">68 / 40</td><td class="n">12% to 18%</td><td class="n">100%</td><td class="n">0% to 21%</td><td class="n">4% to 23%</td><td class="n">0</td></tr>
+<tr class="unfilled"><td>Riverside</td><td>Ironvale</td><td class="n">41 / 23</td><td class="n">20% to 22%</td><td class="n">100%</td><td class="n">4% to 32%</td><td class="n">5% to 26%</td><td class="n">0</td></tr>
+<tr class="quiet"><td>Uptown</td><td>Farlight</td><td class="n">59 / 31</td><td class="n">25% to 87%</td><td class="n">19%</td><td class="n">1% to 20%</td><td class="n">7% to 3%</td><td class="n">28</td></tr>
+<tr class="quiet"><td>Old Town</td><td>Vesper</td><td class="n">72 / 38</td><td class="n">15% to 87%</td><td class="n">26%</td><td class="n">4% to 21%</td><td class="n">3% to 5%</td><td class="n">31</td></tr>
+<tr class="quiet"><td>Harborside</td><td>The Undertow</td><td class="n">63 / 32</td><td class="n">21% to 75%</td><td class="n">28%</td><td class="n">3% to 22%</td><td class="n">8% to 6%</td><td class="n">27</td></tr>
+</table></div>
+<p class="note"><b>Least impacted: Foundry Row.</b> Missed pings rose only from 2% to 10%, the lowest after 4.2, its home responder was still pinged for every callout, and few callouts went untaken. <b>Most impacted:</b> Uptown, Old Town and Harborside (shaded orange), where the home responder was pinged for only 19 to 28% of callouts and outsiders took 86. Riverside, Southport and Kingsbridge (shaded red) now leave 21 to 26% of callouts untaken, and their home responders are the ones covering the three quiet areas. That may be coincidence, with 16 to 57 callouts per area after 4.2.</p>
+
+<h2>How this was built</h2>
+<p class="note">Weekly rates divide the counts by 6.29 weeks (before, 29 Jun to 11 Aug) and 3.71 weeks (after, 12 Aug to 6 Sep). Home area comes from the responders table. Meteor Mite and The Gale share Eastgate. This shows what happened, not why. The cause is unproven: the data has no response times, ranking scores or availability status.</p>
+</main>
+<script>
+var PRE_W=6.29,POST_W=3.71,PRE_N=879,POST_N=440;
+var areas=['Eastgate','Foundry Row','Greenway','Harborside','Hillcrest','Kingsbridge','Lakeshore','Midtown','Mill District','Northfield','Old Town','Riverside','Southport','Uptown','Westbury'];
+var R={'Captain Vantage':['Hillcrest',59,17,30,29],'Cindermark':['Mill District',46,11,22,20],'Corporal Ashgrove':['Northfield',52,11,21,8],'Farlight':['Uptown',59,16,6,5],'Halfmoon':['Westbury',56,13,23,10],'Ironvale':['Riverside',41,10,23,16],'Meteor Mite':['Eastgate',62,8,9,5],'Nightwell':['Midtown',76,19,38,32],'Sgt. Bulwark':['Foundry Row',44,13,22,17],'Sgt. Falkirk':['Kingsbridge',54,9,28,24],'Stormwrack':['Southport',68,14,40,23],'The Drift':['Greenway',36,3,16,12],'The Gale':['Eastgate',76,6,54,15],'The Longcast':['Lakeshore',35,10,19,13],'The Undertow':['Harborside',63,12,9,5],'Vesper':['Old Town',72,14,10,7]};
+var quiet={'Farlight':1,'Meteor Mite':1,'The Undertow':1,'Vesper':1};
+var F=[['Eastgate','Nightwell',14,6],['Midtown','Captain Vantage',13,10],['Midtown','Vesper',9,2],['Northfield','Halfmoon',9,5],['Kingsbridge','Farlight',8,2],['Greenway','Stormwrack',7,4],['Southport','The Undertow',7,2],['Eastgate','Sgt. Bulwark',7,8],['Harborside','Stormwrack',7,19],['Westbury','Corporal Ashgrove',7,4],['Uptown','Sgt. Bulwark',6,9],['Harborside','Ironvale',6,11],['Uptown','Cindermark',6,16],['Old Town','The Longcast',6,12],['Riverside','Cindermark',5,4],['Foundry Row','Farlight',5,0],['Midtown','Meteor Mite',5,5],['Uptown','Sgt. Falkirk',5,20],['Mill District','Ironvale',4,5],['Northfield','Sgt. Falkirk',4,4],['Westbury','The Longcast',4,1],['Riverside','The Undertow',4,1],['Kingsbridge','Corporal Ashgrove',4,4],['Lakeshore','Halfmoon',4,5],['Old Town','Captain Vantage',4,19],['Lakeshore','Vesper',3,2],['Foundry Row','Meteor Mite',3,0],['Midtown','The Gale',3,8],['Foundry Row','The Gale',3,7],['Hillcrest','Nightwell',3,5],['Mill District','Farlight',3,3],['Harborside','The Drift',2,6],['Hillcrest','Vesper',2,3],['Old Town','Nightwell',2,21],['Southport','The Drift',1,6],['Greenway','The Undertow',1,2]];
+var U={'Westbury':[6,2],'Eastgate':[6,6],'Harborside':[5,2],'Uptown':[4,1],'Kingsbridge':[4,6],'Midtown':[4,4],'Southport':[3,9],'Hillcrest':[3,2],'Greenway':[3,2],'Northfield':[3,2],'Riverside':[2,6],'Old Town':[2,2],'Lakeshore':[1,2],'Foundry Row':[1,1],'Mill District':[1,2]};
+var CX=340,CY=305,RAD=195,mode='both',who='all',showNone=false;
+var pos={};
+areas.forEach(function(a,i){var t=-Math.PI/2+i*2*Math.PI/areas.length;pos[a]={x:CX+RAD*Math.cos(t),y:CY+RAD*Math.sin(t),c:Math.cos(t),s:Math.sin(t)};});
+var names=Object.keys(R);
+var sel=document.getElementById('who');
+sel.innerHTML='<option value="all">All responders</option>'+names.map(function(n){return '<option value="'+n+'">'+n+'</option>';}).join('');
+function arc(f,t){var a=pos[f],b=pos[t];var mx=(a.x+b.x)/2,my=(a.y+b.y)/2;var cx=CX+(mx-CX)*0.3,cy=CY+(my-CY)*0.3;return 'M'+a.x.toFixed(1)+' '+a.y.toFixed(1)+' Q'+cx.toFixed(1)+' '+cy.toFixed(1)+' '+b.x.toFixed(1)+' '+b.y.toFixed(1);}
+function f1(v,w){return (Math.round(v/w*10)/10).toFixed(1);}
+function render(){
+  var s='',lines=[];
+  F.forEach(function(r){
+    var to=R[r[1]][0],dim=who!=='all'&&who!==r[1];
+    if(mode!=='post'&&r[2]>0)lines.push({d:arc(r[0],to),w:0.8+r[2]/PRE_W*1.2,c:'var(--pre)',o:dim?0.06:0.55,k:0});
+    if(mode!=='pre'&&r[3]>0)lines.push({d:arc(r[0],to),w:0.8+r[3]/POST_W*1.2,c:'var(--post)',o:dim?0.06:0.55,k:1});
+  });
+  lines.sort(function(a,b){return a.k-b.k;});
+  lines.forEach(function(l){s+='<path d="'+l.d+'" fill="none" stroke="'+l.c+'" stroke-width="'+l.w.toFixed(1)+'" stroke-linecap="round" opacity="'+l.o+'"/>';});
+  if(showNone){
+    areas.forEach(function(a){
+      var p=pos[a],u=U[a];
+      [0,1].forEach(function(k){
+        if((k===0&&mode==='post')||(k===1&&mode==='pre'))return;
+        var rate=u[k]/(k===0?PRE_W:POST_W);
+        if(rate<=0)return;
+        var off=mode==='both'?(k===0?-3:3):0;
+        s+='<line x1="'+(p.x+off).toFixed(1)+'" y1="'+p.y.toFixed(1)+'" x2="'+(CX+off)+'" y2="'+CY+'" stroke="var(--none)" stroke-width="'+(0.6+rate*1.1).toFixed(1)+'" stroke-linecap="round" stroke-dasharray="'+(k===0?'2 5':'7 4')+'" opacity="0.7"/>';
+      });
+    });
+    s+='<circle cx="'+CX+'" cy="'+CY+'" r="34" fill="var(--surface)" stroke="var(--none)" stroke-width="1.5"/>';
+    s+='<text x="'+CX+'" y="'+(CY-2)+'" text-anchor="middle" style="font-size:12px;font-weight:500;fill:var(--text)">Nobody</text><text x="'+CX+'" y="'+(CY+13)+'" text-anchor="middle" style="font-size:12px;font-weight:500;fill:var(--text)">took it</text>';
+  }
+  areas.forEach(function(a){
+    var p=pos[a],here=names.filter(function(n){return R[n][0]===a;});
+    var q=here.some(function(n){return quiet[n];}),hi=who!=='all'&&here.indexOf(who)>-1;
+    s+='<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(hi?10:7)+'" fill="'+(q?'rgba(216,90,48,.25)':'var(--surface)')+'" stroke="'+(q?'var(--post)':'var(--border-strong)')+'" stroke-width="'+(hi?2:1.2)+'"/>';
+    var anchor=p.c>0.3?'start':(p.c<-0.3?'end':'middle'),dx=p.c>0.3?14:(p.c<-0.3?-14:0);
+    var mid=Math.abs(p.c)<=0.3;
+    var y1=mid?(p.s<0?-26:20):-3,y2=mid?(p.s<0?-11:35):12;
+    s+='<text x="'+(p.x+dx).toFixed(1)+'" y="'+(p.y+y1).toFixed(1)+'" text-anchor="'+anchor+'" style="font-size:12px;fill:var(--text-2)">'+a+'</text>';
+    s+='<text x="'+(p.x+dx).toFixed(1)+'" y="'+(p.y+y2).toFixed(1)+'" text-anchor="'+anchor+'" style="font-size:12px;font-weight:500;fill:var(--text)">'+here.join(', ')+'</text>';
+  });
+  document.getElementById('map').innerHTML=s;
+  var ip=0,op=0,iq=0,oq=0,list=who==='all'?names:[who];
+  list.forEach(function(n){ip+=R[n][1];op+=R[n][2];iq+=R[n][3];oq+=R[n][4];});
+  var label=who==='all'?'All responders':who+' ('+R[who][0]+')';
+  var t='<b>'+label+'</b><br>Pings in home area per week: '+f1(ip,PRE_W)+' before, '+f1(iq,POST_W)+' after. Pings outside home area per week: '+f1(op,PRE_W)+' before, '+f1(oq,POST_W)+' after.';
+  if(showNone)t+='<br>Callouts nobody took, all areas, per week: '+f1(48,PRE_W)+' before, '+f1(49,POST_W)+' after.';
+  document.getElementById('readout').innerHTML=t;
+  ['pre','post','both'].forEach(function(m){document.getElementById('m-'+m).setAttribute('aria-pressed',m===mode?'true':'false');});
+}
+['pre','post','both'].forEach(function(m){document.getElementById('m-'+m).onclick=function(){mode=m;render();};});
+sel.onchange=function(){who=this.value;render();};
+document.getElementById('nobody').onchange=function(){showNone=this.checked;render();};
+render();
+
+var T=[['Captain Vantage','Hillcrest',14,0],['Nightwell','Midtown',13,0],['The Longcast','Lakeshore',4,0],['Sgt. Falkirk','Kingsbridge',14,1],['Cindermark','Mill District',9,1],['Sgt. Bulwark','Foundry Row',5,1],['Stormwrack','Southport',14,2],['Ironvale','Riverside',9,2],['The Drift','Greenway',4,2]];
+var G=[['Old Town',"Vesper's home area",'38 callouts after 4.2','Vesper took 5, others 31',70],['Uptown',"Farlight's home area",'31 callouts after 4.2','Farlight took 2, others 28',244],['Harborside',"The Undertow's home area",'32 callouts after 4.2','The Undertow took 3, others 27',418]];
+var tops=[50,100,150,224,274,324,398,448,498],k=[0,1,2,0,1,2,0,1,2],h='';
+h+='<text x="30" y="34" style="font-size:12px;fill:var(--text-2)">Responder who accepted (home base)</text><text x="440" y="34" style="font-size:12px;fill:var(--text-2)">Callout area, 12 Aug to 6 Sep</text>';
+T.forEach(function(t,i){var sy=tops[i]+20,ty=G[t[3]][4]+22+k[i]*28;h+='<path d="M230 '+sy+' C335 '+sy+',335 '+ty+',440 '+ty+'" fill="none" stroke="var(--ok)" stroke-width="'+(t[2]*0.8).toFixed(1)+'" opacity="0.5"/>';});
+T.forEach(function(t,i){h+='<rect x="30" y="'+tops[i]+'" width="200" height="40" rx="6" fill="var(--surface)" stroke="var(--ok)" stroke-width="1"/><text x="42" y="'+(tops[i]+16)+'" style="font-size:14px;font-weight:500;fill:var(--text)">'+t[0]+'</text><text x="42" y="'+(tops[i]+31)+'" style="font-size:12px;fill:var(--text-2)">home '+t[1]+' · took '+t[2]+'</text>';});
+G.forEach(function(g){h+='<rect x="440" y="'+g[4]+'" width="220" height="100" rx="8" fill="var(--surface)" stroke="var(--post)" stroke-width="1"/><text x="456" y="'+(g[4]+22)+'" style="font-size:14px;font-weight:500;fill:var(--text)">'+g[0]+'</text><text x="456" y="'+(g[4]+40)+'" style="font-size:12px;fill:var(--text-2)">'+g[1]+'</text><text x="456" y="'+(g[4]+58)+'" style="font-size:12px;fill:var(--text-2)">'+g[2]+'</text><text x="456" y="'+(g[4]+76)+'" style="font-size:12px;fill:var(--text-2)">'+g[3]+'</text>';});
+document.getElementById('flow').innerHTML=h;
+
+var rows=areas.map(function(a){return [a,U[a][0],U[a][1],names.filter(function(n){return R[n][0]===a;}).join(', ')];}).sort(function(x,y){return y[2]-x[2]||y[1]-x[1];});
+var th='<tr><th>Callout area</th><th>Home responder</th><th class="n">Before 4.2</th><th class="n">After 4.2</th></tr>';
+rows.forEach(function(r){th+='<tr><td>'+r[0]+'</td><td>'+r[3]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td></tr>';});
+th+='<tr><th colspan="2">All areas</th><th class="n">48 of 879</th><th class="n">49 of 440</th></tr>';
+document.getElementById('tbl').innerHTML=th;
+</script>
