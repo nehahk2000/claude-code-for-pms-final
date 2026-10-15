@@ -1,0 +1,332 @@
+<title>Release 4.2 Case File</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+<style>
+:root{--page:#1E50C8;--dots:rgba(255,255,255,.2);--panel:#FFFFFF;--ink:#0B1F4B;--ink2:#2B3A66;--line:#0B1F4B;--shadow:#0B1F4B;--yellow:#FFD60A;--orange:#FF7A00;--good:#0B6B35;--goodbg:#D9F5E3;--bad:#B3121A;--badbg:#FFE1DE;--warn:#8A4B00;--warnbg:#FFF0C2;--chip:#EAF0FF;--head:#FFD60A;--headink:#0B1F4B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0A1740;--dots:rgba(255,255,255,.08);--panel:#16224D;--ink:#F5F7FF;--ink2:#C9D3F5;--line:#02081F;--shadow:#02081F;--good:#7FE3A5;--goodbg:#0F3B27;--bad:#FF9C95;--badbg:#4A1518;--warn:#FFD27A;--warnbg:#4A3507;--chip:#22316B;color-scheme:dark}}
+:root[data-theme="dark"]{--page:#0A1740;--dots:rgba(255,255,255,.08);--panel:#16224D;--ink:#F5F7FF;--ink2:#C9D3F5;--line:#02081F;--shadow:#02081F;--good:#7FE3A5;--goodbg:#0F3B27;--bad:#FF9C95;--badbg:#4A1518;--warn:#FFD27A;--warnbg:#4A3507;--chip:#22316B;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--page);background-image:radial-gradient(var(--dots) 1.6px,transparent 1.8px);background-size:14px 14px;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding-block:20px 56px;padding-inline:16px}
+h1,h2,h3,.disp{font-family:"Bangers","Impact","Arial Black",sans-serif;font-weight:400;letter-spacing:.04em}
+h1{font-size:clamp(34px,8vw,58px);line-height:1.02;margin:0;color:var(--headink);text-shadow:3px 3px 0 var(--orange)}
+h2{font-size:clamp(26px,5.5vw,34px);margin:0 0 8px;line-height:1.1}
+h3{font-size:20px;margin:0 0 4px}
+.top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.banner{background:var(--head);border:4px solid var(--line);box-shadow:6px 6px 0 var(--shadow);padding:14px 18px;flex:1 1 280px;min-width:0}
+.banner p{margin:6px 0 0;color:var(--headink);font-weight:600}
+.panel{background:var(--panel);border:4px solid var(--line);box-shadow:6px 6px 0 var(--shadow);padding:16px 18px;margin-top:26px;min-width:0}
+.panel>.kick{display:inline-block;background:var(--orange);color:#0B1F4B;border:3px solid var(--line);font-family:"Bangers","Impact",sans-serif;letter-spacing:.06em;padding:2px 10px;margin:-30px 0 8px;font-size:18px}
+p{margin:0 0 10px}
+.sub{color:var(--ink2);font-size:15px}
+button,select,input{font:inherit}
+button{cursor:pointer;color:var(--ink);background:var(--chip);border:3px solid var(--line);padding:6px 12px;box-shadow:3px 3px 0 var(--shadow);font-weight:600}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+button[aria-pressed="true"],button.on{background:var(--yellow);color:#0B1F4B}
+:focus-visible{outline:4px solid var(--orange);outline-offset:2px}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;padding:1px 7px;border:2px solid var(--line);margin-left:6px;vertical-align:middle;text-transform:uppercase}
+.tag.obs{background:var(--goodbg);color:var(--good)}
+.tag.est{background:var(--warnbg);color:var(--warn)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:6px}
+.burst{position:relative;aspect-ratio:1/1;max-width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16%}
+.burst svg{position:absolute;inset:0;width:100%;height:100%}
+.burst>*{position:relative;color:#0B1F4B}
+.burst .big{font-family:"Bangers","Impact",sans-serif;font-size:clamp(22px,4.6vw,30px);line-height:1;letter-spacing:.03em}
+.burst .lab{font-size:13px;font-weight:700;line-height:1.2;margin-top:6px}
+.burst .tag{margin:6px 0 0;background:#fff;color:#0B1F4B}
+.switchrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0 12px}
+.steps{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.step{border:3px solid var(--line);background:var(--chip);padding:10px 12px;text-align:left;box-shadow:3px 3px 0 var(--shadow);position:relative;width:100%}
+.step .num{font-family:"Bangers","Impact",sans-serif;font-size:22px;color:var(--ink)}
+.step .file{display:inline-block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:var(--panel);border:2px solid var(--line);padding:0 6px;margin-top:4px;color:var(--ink)}
+.step .saw{display:none;margin-top:8px;font-size:14px;border-top:2px dashed var(--line);padding-top:6px;font-weight:400}
+.step[aria-expanded="true"] .saw{display:block}
+.step .stamp{display:none;position:absolute;top:-10px;right:-6px;background:var(--bad);color:#fff;font-family:"Bangers","Impact",sans-serif;letter-spacing:.06em;padding:0 8px;border:3px solid var(--line);transform:rotate(4deg)}
+.loopon .step.loop{background:var(--badbg);border-color:var(--bad)}
+.loopon .step.loop .stamp{display:block}
+.loopnote{display:none;background:var(--badbg);border:3px solid var(--bad);padding:8px 12px;margin-bottom:10px;font-weight:600}
+.loopon .loopnote{display:block}
+.score{display:grid;gap:12px}
+.row{display:grid;grid-template-columns:minmax(0,1.3fr) auto auto;gap:10px;align-items:center;border:3px solid var(--line);padding:10px 12px;background:var(--chip)}
+.row .what{min-width:0}
+.row .ev{grid-column:1/-1;font-size:14px;color:var(--ink2)}
+.stampbox{font-family:"Bangers","Impact",sans-serif;letter-spacing:.06em;font-size:18px;padding:1px 10px;border:3px solid var(--line);transform:rotate(-3deg);white-space:nowrap}
+.s-yes{background:var(--goodbg);color:var(--good)}
+.s-no{background:var(--badbg);color:var(--bad)}
+.s-na{background:var(--warnbg);color:var(--warn)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{border:3px solid var(--line);background:var(--chip);padding:10px 12px;box-shadow:3px 3px 0 var(--shadow);min-width:0}
+.sev{display:inline-block;font-weight:800;font-size:12px;padding:0 8px;border:2px solid var(--line);text-transform:uppercase;letter-spacing:.05em}
+.sev.High{background:var(--badbg);color:var(--bad)}
+.sev.Medium{background:var(--warnbg);color:var(--warn)}
+.sev.Low,.sev.Unknown{background:var(--panel);color:var(--ink)}
+.fname{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:var(--panel);border:2px solid var(--line);padding:0 6px;margin-right:4px;color:var(--ink);display:inline-block}
+.heroes{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.ctl{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:10px 0}
+.ctl label{display:block;font-size:14px;font-weight:600}
+.ctl output{font-family:"Bangers","Impact",sans-serif;font-size:18px;letter-spacing:.04em;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--orange)}
+.chartbox{border:3px solid var(--line);background:var(--panel);padding:6px}
+.chartbox svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;margin:8px 0}
+.legend i{display:inline-block;width:26px;height:0;border-top:4px solid;vertical-align:middle;margin-right:6px}
+.results{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:8px}
+.res{border:3px solid var(--line);background:var(--chip);padding:8px 12px}
+.res b{font-family:"Bangers","Impact",sans-serif;font-size:26px;font-weight:400;letter-spacing:.04em}
+.notice{background:var(--warnbg);color:var(--ink);border:3px solid var(--line);padding:8px 12px;margin:10px 0;font-size:14px}
+.todo{display:grid;gap:10px}
+.todo label{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;border:3px solid var(--line);background:var(--chip);padding:10px 12px;cursor:pointer}
+.todo input{width:22px;height:22px;accent-color:var(--orange);margin-top:2px}
+.todo .done{font-size:14px;color:var(--ink2)}
+.bar{height:22px;border:3px solid var(--line);background:var(--panel);margin:8px 0;position:relative}
+.bar>div{height:100%;background:var(--orange);width:0}
+.bar span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--ink)}
+textarea.fallback{width:100%;height:140px;margin-top:8px;font:13px ui-monospace,Menlo,Consolas,monospace;background:var(--panel);color:var(--ink);border:3px solid var(--line)}
+.loose{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.foot{color:#fff;font-size:13px;margin-top:22px}
+.foot b{font-weight:700}
+.sr{position:absolute;left:-9999px}
+@media (max-width:520px){.row{grid-template-columns:minmax(0,1fr)}.panel{padding:14px 12px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap" id="wrap">
+<div class="top">
+  <div class="banner">
+    <h1>Release 4.2 case file</h1>
+    <p>What the change did to the heroes of Rook Dispatch, from 29 Jun to 6 Sep 2026. Fictional teaching scenario.</p>
+  </div>
+  <button id="theme" aria-label="Switch between light and dark version">Light / dark</button>
+</div>
+
+<section class="panel" aria-labelledby="h-nums">
+  <span class="kick">THE NUMBERS</span>
+  <h2 id="h-nums">Four numbers, before and after 12 August</h2>
+  <p class="sub">Observed in the Rook database. Before is 29 Jun to 11 Aug, after is 12 Aug to 6 Sep.</p>
+  <div class="tiles" id="tiles"></div>
+</section>
+
+<section class="panel" aria-labelledby="h-mission">
+  <span class="kick">THE MISSION</span>
+  <h2 id="h-mission">From "something goes wrong" to "the phone buzzes"</h2>
+  <p class="sub">Twelve steps, in the order they happen. Tap a step to see what our data showed. Source: the files in the dispatch-routing code folder.</p>
+  <div class="switchrow">
+    <button id="loopbtn" aria-pressed="false">Show where the heroes got stuck</button>
+  </div>
+  <div class="loopnote" id="loopnote">Steps 6, 8, 10 and 11 make a loop. Less time to answer means more silence. Silence is penalised like a refusal. A lower score pushes the hero down the list. Fewer offers mean less chance to earn the score back.</div>
+  <div class="steps" id="steps"></div>
+</section>
+
+<section class="panel" aria-labelledby="h-asked">
+  <span class="kick">SCOREBOARD</span>
+  <h2 id="h-asked">Asked versus built</h2>
+  <p class="sub">Each change that was requested for 4.2, from the release page and the Q3 roadmap.</p>
+  <div class="score" id="score"></div>
+</section>
+
+<section class="panel" aria-labelledby="h-vill">
+  <span class="kick">THE VILLAINS</span>
+  <h2 id="h-vill">Bugs and design flaws</h2>
+  <p class="sub">Filter by the file each one lives in. "Observed" means it shows in the data. "Estimated" means it comes from reading the code or from the replay.</p>
+  <div class="filters" id="filters" role="group" aria-label="Filter by file"></div>
+  <div class="cards" id="cards"></div>
+</section>
+
+<section class="panel" aria-labelledby="h-lab">
+  <span class="kick">HERO HEALTH LAB</span>
+  <h2 id="h-lab">Replay a hero's real history under different rules <span class="tag est">Estimated</span></h2>
+  <p class="sub">Every offer each hero actually received is replayed in order, from a starting score of 0.5. The orange line uses today's rules, read from the code: a yes adds 0.08, a refusal or silence takes off 0.12, the score stays between 0 and 1. The dashed line uses the rules you set below.</p>
+  <div class="notice"><b>Read this first.</b> The replay shows what would have happened to the score. It is not a forecast: heroes would also behave differently under different rules. Real scores are not in the database, so even today's line is a reconstruction.</div>
+  <div class="heroes" id="heroes" role="group" aria-label="Choose a hero"></div>
+  <div class="ctl">
+    <div><label for="s-miss">Cost of a missed offer <output id="o-miss"></output></label><input type="range" id="s-miss" min="0" max="0.12" step="0.01" value="0.03"></div>
+    <div><label for="s-ref">Cost of a refusal <output id="o-ref"></output></label><input type="range" id="s-ref" min="0" max="0.24" step="0.01" value="0.12"></div>
+    <div><label for="s-free">Misses in a row before any cost <output id="o-free"></output></label><input type="range" id="s-free" min="0" max="5" step="1" value="2"></div>
+    <div><label for="s-drift">Daily drift back toward neutral <output id="o-drift"></output></label><input type="range" id="s-drift" min="0" max="0.1" step="0.005" value="0.02"></div>
+    <div><label for="s-floor">Lowest allowed score <output id="o-floor"></output></label><input type="range" id="s-floor" min="0" max="0.6" step="0.05" value="0.3"></div>
+    <div><label><input type="checkbox" id="c-away"> No cost for offers outside their home area</label>
+      <div class="switchrow" style="margin-top:8px"><button id="b-mine">Use my suggested rules</button><button id="b-today">Match today's rules</button></div></div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div class="chartbox"><svg id="chart" viewBox="0 0 680 330" role="img" aria-label="Line chart of the hero's score over time under today's rules and under your rules"></svg></div>
+  <p class="sub" id="chartnote" style="margin-top:8px"></p>
+  <div class="results" id="results" aria-live="polite"></div>
+</section>
+
+<section class="panel" aria-labelledby="h-orders">
+  <span class="kick">ORDERS</span>
+  <h2 id="h-orders">Orders for the developer</h2>
+  <p class="sub">In priority order. The goal: no hero leaves the system silently because of missed, ignored or declined offers.</p>
+  <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar"><div id="barfill"></div><span id="bartext">0 of 0 done</span></div>
+  <div class="todo" id="todo"></div>
+  <div class="switchrow" style="margin-top:12px"><button id="copy">Copy as text</button><span id="copied" class="sub" aria-live="polite"></span></div>
+  <textarea id="fallback" class="fallback" hidden readonly aria-label="Orders as plain text"></textarea>
+</section>
+
+<section class="panel" aria-labelledby="h-loose">
+  <span class="kick">LOOSE ENDS</span>
+  <h2 id="h-loose">What could not be verified, and who to ask</h2>
+  <div class="loose" id="loose"></div>
+</section>
+
+<p class="foot"><b>Sources:</b> Rook database (pings, callouts, responders, support tickets), Rook wiki (release page, roadmap, glossary, product one-pager, handler interviews), and the dispatch-routing code folder. Responders appear only under their cover names. Nothing here identifies the people behind them.</p>
+</div>
+
+<script>
+var RULES={credit:0.08,penalty:0.12,floor:0,ceiling:1,neutral:0.5};
+var TOTAL=1680,RELEASE=1056;
+var H={
+"Farlight":{home:"Uptown",role:"Went quiet",pings:[[31.6,"T",1],[47.9,"D",0],[56.9,"T",1],[59.5,"D",0],[59.5,"D",1],[68.9,"T",1],[69.3,"T",1],[69.9,"T",1],[80.6,"T",1],[81.1,"T",1],[112.2,"T",1],[120.8,"T",1],[172.4,"T",1],[202.0,"T",1],[216.2,"D",1],[229.8,"T",1],[248.3,"T",1],[258.8,"T",1],[259.7,"D",0],[260.2,"D",0],[261.4,"T",1],[296.8,"T",1],[302.0,"T",1],[327.6,"T",1],[351.5,"T",1],[359.4,"M",0],[389.1,"T",1],[407.4,"T",1],[422.3,"T",1],[427.1,"T",1],[440.3,"D",0],[474.6,"D",0],[475.6,"T",1],[477.3,"T",1],[479.3,"T",1],[514.6,"T",1],[515.5,"T",1],[535.7,"T",1],[538.8,"T",1],[569.5,"M",0],[570.8,"T",1],[597.9,"T",1],[599.5,"D",0],[604.9,"T",1],[613.5,"D",1],[619.6,"T",1],[624.1,"T",1],[684.6,"T",1],[685.3,"T",1],[718.9,"D",0],[737.5,"T",1],[765.8,"T",1],[776.0,"T",1],[793.1,"T",1],[807.8,"T",1],[815.5,"D",1],[825.3,"T",1],[827.0,"D",0],[834.7,"T",1],[836.9,"T",1],[855.7,"D",0],[884.0,"T",1],[893.5,"T",1],[897.8,"T",1],[904.4,"T",1],[907.8,"T",1],[924.3,"T",1],[948.6,"D",0],[954.7,"T",1],[960.4,"M",0],[970.7,"T",1],[980.3,"D",0],[1023.6,"T",1],[1025.6,"T",1],[1029.1,"D",0],[1072.6,"T",1],[1075.9,"M",0],[1076.0,"D",0],[1089.8,"M",1],[1094.9,"M",0],[1120.5,"M",1],[1125.4,"T",1],[1237.5,"M",1],[1307.2,"D",1],[1333.9,"M",0],[1459.5,"M",0]]},
+"The Undertow":{home:"Harborside",role:"Went quiet",pings:[[5.7,"T",1],[7.4,"T",1],[13.9,"D",0],[14.5,"T",1],[15.3,"T",1],[18.3,"D",0],[33.0,"D",0],[58.7,"T",1],[67.4,"T",1],[113.5,"T",1],[113.8,"T",1],[132.5,"T",1],[184.6,"T",1],[206.3,"D",1],[209.2,"T",1],[209.3,"T",1],[236.1,"T",1],[237.4,"T",1],[242.6,"T",1],[248.6,"D",1],[261.5,"T",1],[271.7,"T",1],[304.2,"T",1],[340.0,"T",1],[356.4,"M",0],[397.1,"T",1],[399.9,"T",1],[425.7,"T",1],[427.9,"T",1],[429.6,"T",1],[449.9,"D",0],[449.9,"D",0],[450.0,"T",1],[450.8,"T",1],[463.7,"T",1],[505.6,"D",1],[511.0,"D",1],[520.3,"T",1],[522.0,"T",1],[522.2,"T",1],[570.4,"T",1],[574.6,"T",1],[591.5,"T",1],[595.0,"T",1],[636.3,"T",1],[648.5,"T",1],[654.3,"D",0],[667.8,"T",1],[680.9,"T",1],[683.3,"T",1],[705.5,"T",1],[713.9,"T",1],[724.1,"T",1],[726.5,"T",1],[737.0,"T",1],[786.4,"T",1],[788.1,"D",0],[800.1,"D",0],[806.1,"T",1],[810.8,"T",1],[874.4,"T",1],[876.7,"D",1],[905.8,"T",1],[906.3,"T",1],[908.9,"D",0],[912.8,"T",1],[940.4,"D",0],[946.5,"T",1],[955.9,"T",1],[958.2,"T",1],[959.2,"T",1],[974.0,"T",1],[1026.8,"T",1],[1027.8,"T",1],[1051.0,"D",0],[1065.1,"M",0],[1091.4,"M",1],[1093.5,"T",1],[1095.9,"T",1],[1098.7,"M",1],[1106.9,"M",0],[1114.4,"M",0],[1165.8,"D",0],[1190.2,"D",0],[1195.1,"T",1],[1216.3,"M",1],[1288.8,"M",1],[1439.3,"M",1],[1647.3,"M",1]]},
+"Vesper":{home:"Old Town",role:"Went quiet",pings:[[0.1,"T",1],[39.1,"D",0],[43.3,"T",1],[61.5,"T",1],[67.4,"T",1],[68.3,"T",1],[80.7,"T",1],[87.6,"T",1],[103.5,"T",1],[110.9,"T",1],[116.2,"D",0],[121.0,"T",1],[134.3,"T",1],[166.1,"D",1],[176.8,"T",1],[194.0,"M",0],[210.7,"T",1],[212.9,"T",1],[233.2,"T",1],[263.0,"T",1],[301.8,"T",1],[302.3,"D",0],[303.1,"T",1],[309.3,"T",1],[309.5,"D",0],[322.9,"T",1],[328.1,"T",1],[338.2,"T",1],[354.4,"T",1],[354.7,"T",1],[379.2,"T",1],[396.1,"T",1],[403.8,"T",1],[404.0,"T",1],[427.0,"D",0],[429.4,"T",1],[449.4,"T",1],[451.5,"M",0],[452.3,"T",1],[493.8,"T",1],[496.0,"T",1],[499.6,"T",1],[513.8,"D",0],[514.2,"D",0],[525.3,"T",1],[553.9,"T",1],[563.3,"T",1],[563.5,"T",1],[568.9,"T",1],[570.4,"T",1],[592.9,"T",1],[601.2,"T",1],[639.8,"T",1],[643.2,"D",0],[649.1,"T",1],[671.1,"T",1],[680.6,"T",1],[692.8,"T",1],[703.4,"T",1],[707.6,"T",1],[710.8,"T",1],[723.5,"T",1],[746.5,"M",0],[751.8,"T",1],[757.4,"T",1],[767.3,"T",1],[779.5,"T",1],[785.0,"T",1],[811.2,"D",0],[870.7,"T",1],[879.2,"T",1],[879.3,"T",1],[882.1,"T",1],[904.8,"T",1],[908.4,"T",1],[917.8,"T",1],[921.7,"T",1],[924.3,"D",0],[929.8,"T",1],[949.0,"T",1],[953.1,"T",1],[953.9,"D",0],[979.9,"T",1],[1010.0,"T",1],[1021.6,"D",1],[1053.0,"T",1],[1087.6,"M",0],[1106.9,"T",1],[1121.2,"M",0],[1141.0,"T",1],[1143.6,"D",0],[1149.0,"T",1],[1162.8,"M",0],[1166.1,"M",0],[1168.1,"T",1],[1184.9,"T",1],[1242.7,"M",1],[1320.2,"M",1],[1325.6,"D",0],[1340.3,"M",0],[1365.7,"D",1],[1410.2,"M",1],[1547.7,"M",1]]},
+"Meteor Mite":{home:"Eastgate",role:"Went quiet",pings:[[56.7,"T",1],[63.0,"D",1],[73.2,"T",1],[77.7,"T",1],[114.4,"T",1],[129.0,"D",1],[131.9,"D",0],[134.8,"D",1],[143.6,"T",1],[156.3,"T",1],[162.3,"T",1],[183.3,"T",1],[203.7,"T",1],[209.3,"T",1],[215.0,"T",1],[224.8,"T",1],[235.7,"T",1],[282.3,"D",0],[282.7,"T",1],[308.5,"D",1],[325.4,"T",1],[330.9,"T",1],[336.0,"D",0],[345.2,"T",1],[346.8,"D",1],[355.3,"T",1],[367.6,"D",1],[396.6,"T",1],[453.0,"T",1],[488.8,"T",1],[489.2,"T",1],[501.0,"D",0],[502.8,"D",0],[520.4,"T",1],[522.4,"T",1],[585.8,"M",1],[586.7,"D",1],[595.5,"T",1],[597.3,"T",1],[612.6,"T",1],[617.3,"D",1],[619.2,"D",1],[633.1,"T",1],[634.6,"T",1],[672.8,"T",1],[688.2,"T",1],[690.2,"T",1],[715.1,"T",1],[715.8,"M",1],[718.5,"T",1],[761.2,"T",1],[762.9,"D",0],[765.4,"T",1],[802.2,"T",1],[831.8,"T",1],[835.2,"D",1],[859.6,"T",1],[884.6,"T",1],[901.8,"D",1],[902.9,"T",1],[913.2,"D",0],[913.4,"T",1],[917.0,"D",0],[928.3,"T",1],[967.9,"T",1],[976.9,"T",1],[980.7,"T",1],[1022.1,"D",1],[1029.3,"T",1],[1038.7,"T",1],[1075.1,"D",0],[1093.7,"M",0],[1095.2,"M",1],[1111.4,"M",1],[1143.3,"T",1],[1147.7,"T",1],[1163.3,"M",1],[1207.6,"D",1],[1241.5,"T",1],[1264.7,"M",1],[1316.9,"M",0],[1436.1,"D",0],[1473.3,"M",1],[1647.1,"M",0]]},
+"Captain Vantage":{home:"Hillcrest",role:"Busy: absorbed extra work",pings:[[18.3,"T",1],[38.5,"T",1],[39.1,"D",0],[40.1,"T",1],[45.4,"T",1],[59.0,"D",1],[69.9,"T",1],[69.9,"T",1],[115.3,"T",1],[118.0,"T",1],[127.5,"T",1],[163.1,"T",1],[169.4,"T",1],[178.2,"T",1],[179.3,"T",1],[207.2,"T",1],[210.7,"D",0],[226.3,"T",1],[234.7,"M",0],[245.2,"T",1],[256.0,"T",1],[257.8,"T",1],[286.0,"T",1],[309.3,"D",0],[332.6,"T",1],[350.1,"T",1],[367.7,"T",1],[369.1,"T",1],[396.1,"D",0],[402.8,"T",1],[425.1,"D",0],[431.1,"D",0],[451.7,"T",1],[494.2,"T",1],[495.2,"D",0],[499.7,"T",1],[503.9,"T",1],[514.2,"T",1],[545.1,"D",0],[545.2,"D",0],[569.7,"T",1],[573.5,"T",1],[573.5,"T",1],[601.1,"M",0],[619.2,"D",1],[643.9,"T",1],[649.6,"T",1],[665.9,"T",1],[716.5,"T",1],[734.4,"T",1],[746.5,"T",1],[760.1,"T",1],[767.4,"T",1],[776.8,"T",1],[783.7,"D",0],[800.1,"T",1],[804.7,"D",0],[832.7,"T",1],[833.8,"T",1],[837.9,"D",0],[857.2,"D",0],[860.8,"T",1],[872.9,"T",1],[900.3,"T",1],[902.6,"T",1],[903.3,"T",1],[903.4,"T",1],[943.0,"T",1],[943.6,"T",1],[956.8,"D",0],[957.4,"T",1],[995.9,"D",1],[1027.0,"T",1],[1028.7,"D",0],[1040.8,"T",1],[1052.8,"T",1],[1070.0,"D",0],[1075.1,"M",0],[1093.7,"D",0],[1097.3,"T",1],[1121.2,"T",1],[1124.4,"T",1],[1162.8,"T",1],[1166.1,"T",1],[1168.1,"D",0],[1191.0,"T",1],[1212.1,"T",1],[1239.0,"T",1],[1244.5,"M",0],[1244.7,"T",1],[1262.4,"M",0],[1265.4,"D",1],[1265.9,"T",1],[1268.7,"T",1],[1294.8,"T",1],[1294.9,"T",0],[1298.4,"T",0],[1307.9,"T",1],[1313.9,"D",0],[1320.2,"T",0],[1361.1,"T",0],[1364.2,"T",0],[1364.4,"T",1],[1381.0,"M",1],[1399.2,"T",1],[1401.4,"T",1],[1411.0,"T",1],[1413.0,"D",0],[1427.2,"T",1],[1435.2,"T",0],[1436.1,"D",0],[1459.0,"T",0],[1479.3,"T",1],[1479.9,"T",1],[1489.3,"T",1],[1499.5,"T",0],[1501.9,"D",0],[1533.9,"T",0],[1547.3,"T",1],[1547.7,"D",0],[1569.2,"T",1],[1574.8,"T",0],[1582.4,"T",1],[1595.2,"T",0],[1602.5,"M",0],[1619.5,"T",1],[1619.9,"T",0],[1623.3,"D",0],[1645.2,"T",1],[1650.5,"T",0],[1651.9,"T",1],[1663.9,"D",0],[1664.1,"M",0],[1665.7,"T",0],[1676.9,"T",1]]},
+"Sgt. Bulwark":{home:"Foundry Row",role:"Unaffected",pings:[[2.5,"T",1],[31.6,"D",0],[47.9,"T",1],[59.5,"T",1],[63.6,"T",1],[68.9,"T",1],[80.1,"T",1],[112.1,"D",0],[163.6,"T",1],[169.7,"T",1],[179.7,"T",1],[210.4,"T",1],[259.7,"T",1],[282.7,"D",0],[294.3,"T",1],[302.0,"D",0],[307.1,"T",1],[327.5,"T",1],[336.4,"T",1],[367.6,"D",0],[370.7,"T",1],[421.5,"D",0],[426.1,"T",1],[428.4,"T",1],[447.4,"T",1],[450.1,"T",1],[457.6,"T",1],[502.8,"T",1],[597.1,"T",1],[597.9,"D",0],[599.5,"T",1],[607.2,"T",1],[615.1,"T",1],[620.2,"D",1],[638.4,"T",1],[668.7,"T",1],[669.8,"T",1],[718.5,"D",0],[731.1,"T",1],[737.5,"D",0],[740.0,"T",1],[761.2,"D",0],[762.9,"T",1],[803.7,"T",1],[813.5,"T",1],[855.7,"T",1],[876.0,"T",1],[911.3,"T",1],[913.2,"T",1],[926.5,"T",1],[931.7,"T",1],[949.9,"T",1],[967.9,"D",0],[970.7,"D",0],[1022.1,"D",0],[1043.6,"T",1],[1053.2,"T",1],[1115.7,"M",0],[1123.7,"T",1],[1142.2,"T",1],[1143.3,"D",0],[1147.7,"M",0],[1161.7,"D",0],[1173.6,"T",1],[1196.6,"T",1],[1209.1,"T",1],[1210.8,"D",0],[1218.4,"T",1],[1235.1,"T",1],[1237.5,"T",1],[1270.7,"T",0],[1280.2,"T",1],[1289.2,"M",0],[1293.4,"T",1],[1379.3,"D",0],[1381.8,"T",1],[1426.6,"D",0],[1433.9,"M",1],[1439.7,"T",1],[1455.3,"T",1],[1483.2,"M",0],[1485.6,"T",1],[1495.4,"T",1],[1498.3,"T",0],[1503.1,"T",0],[1528.7,"M",0],[1529.7,"T",1],[1529.7,"D",0],[1556.0,"T",1],[1606.4,"T",1],[1606.6,"T",0],[1629.8,"M",0],[1629.8,"T",1],[1649.2,"T",1],[1650.3,"T",1],[1671.4,"T",0]]}
+};
+var ORDER=["Farlight","The Undertow","Vesper","Meteor Mite","Captain Vantage","Sgt. Bulwark"];
+
+var TILES=[
+ {big:"2.3% to 18.0%",lab:"of offers went unanswered",tag:"obs",c:"#FFD60A"},
+ {big:"6.7 to 0.6",lab:"offers a day to the four heroes who went quiet (6 to 11 Aug vs 27 Aug to 6 Sep)",tag:"obs",c:"#FF7A00"},
+ {big:"5.5% to 11.1%",lab:"of callouts that nobody took",tag:"obs",c:"#FFD60A"},
+ {big:"0 to 86",lab:"callouts taken by a hero away from their home area",tag:"obs",c:"#FF7A00"}
+];
+function burstPoints(){var p=[],n=16,i;for(i=0;i<n*2;i++){var r=i%2===0?98:76,a=Math.PI*2*i/(n*2)-Math.PI/2;p.push((100+r*Math.cos(a)).toFixed(1)+","+(100+r*Math.sin(a)).toFixed(1));}return p.join(" ");}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e;}
+function tagHtml(t){return '<span class="tag '+(t==="obs"?"obs":"est")+'">'+(t==="obs"?"Observed":"Estimated")+'</span>';}
+(function(){var box=document.getElementById("tiles");TILES.forEach(function(t){var d=el("div","burst");d.innerHTML='<svg viewBox="0 0 200 200" aria-hidden="true"><polygon points="'+burstPoints()+'" fill="'+t.c+'" stroke="#0B1F4B" stroke-width="5" stroke-linejoin="round"/></svg><div class="big">'+t.big+'</div><div class="lab">'+t.lab+'</div>'+tagHtml(t.tag);box.appendChild(d);});})();
+
+var STEPS=[
+ {t:"Something goes wrong",p:"A callout comes in: someone needs help somewhere in the city.",f:"Not in the code folder (the console or an intake system)",saw:"Observed: 1,319 callouts between 29 Jun and 6 Sep."},
+ {t:"The clock starts",p:"The first offer goes out by itself, with no handler involved.",f:"offer.py",saw:"Observed: the first offer left about 14 seconds after the callout, before and after 4.2."},
+ {t:"Work down a list",p:"Dispatch will offer the job to one hero at a time until someone says yes.",f:"offer.py",saw:"Observed: about 1.2 to 1.3 offers per callout."},
+ {t:"Who is free right now?",p:"It picks everyone marked available in that part of the city.",f:"availability.py",saw:"Estimated: this file is a placeholder, so we can't check it. The handlers of the quiet heroes say their heroes were marked available."},
+ {t:"How close are they?",p:"Each hero gets a closeness mark from travel time. More than 45 minutes away counts as zero.",f:"routing.py (weight in config.py)",saw:"Observed in the code: closeness counts 60% after 4.2, up from 45%."},
+ {t:"How often do they say yes?",p:"Each hero has a running 'yes' score from 0 to 1, starting in the middle. It counts 25% after 4.2, down from 40%.",f:"history.py",loop:true,saw:"Estimated: replaying the real history, the four quiet heroes' scores reach exactly zero."},
+ {t:"Can they do this job?",p:"The share of the job's required skills the hero has. It counts 15%, unchanged.",f:"routing.py",saw:"Observed: skills are not in the database. Handlers say the tags are present."},
+ {t:"Sort best to worst",p:"Everyone free is ranked. Nobody is removed, but a low score pushes a hero toward the back.",f:"routing.py",loop:true,saw:"Observed: in Old Town, Uptown and Harborside the first offer went outside the area on 83% of callouts after 4.2, against 20% before."},
+ {t:"Send the offer to the phone",p:"The offer goes to the top hero's phone.",f:"offer.py",saw:"Observed: Farlight missed 3 of 6 offers for callouts in their own area after 12 Aug. The sending code is a placeholder here."},
+ {t:"Wait up to 60 seconds",p:"No answer in time and the offer is taken back. This used to be 90 seconds.",f:"offer.py (time set in config.py)",loop:true,saw:"Observed: the gap before the next offer measured about 92 seconds before 4.2 and about 62 after."},
+ {t:"Yes, no, or silence",p:"A yes earns a small reward. A no and silence cost the same, and it is bigger than the reward.",f:"history.py",loop:true,saw:"Observed: unanswered offers rose from 2.3% to 18.0% of all offers while refusals stayed flat."},
+ {t:"If nobody says yes",p:"When the list runs out, the system gives up. What happens next is not in this folder.",f:"offer.py",saw:"Observed: 82% of the callouts nobody took had only one offer sent, so the list seems to stop early."}
+];
+(function(){var box=document.getElementById("steps");STEPS.forEach(function(s,i){var b=el("button","step"+(s.loop?" loop":""));b.setAttribute("aria-expanded","false");b.innerHTML='<span class="stamp">LOOP</span><span class="num">Step '+(i+1)+'</span> <b>'+s.t+'</b><br>'+s.p+'<br><span class="file">'+s.f+'</span><span class="saw">'+s.saw+'</span>';b.onclick=function(){b.setAttribute("aria-expanded",b.getAttribute("aria-expanded")==="true"?"false":"true");};box.appendChild(b);});
+ var lb=document.getElementById("loopbtn");lb.onclick=function(){var on=lb.getAttribute("aria-pressed")!=="true";lb.setAttribute("aria-pressed",on?"true":"false");document.getElementById("wrap").classList.toggle("loopon",on);};})();
+
+var SCORE=[
+ {w:"Weigh closeness more when ranking",b:"BUILT",k:"yes",r:"DID NOT",rk:"no",e:"Observed: in Old Town, Uptown and Harborside the first offer went outside the area on 83% of callouts after 4.2, against 20% before. Elsewhere it stayed near 28%."},
+ {w:"Tune the wait for an answer",b:"BUILT",k:"yes",r:"DID NOT",rk:"no",e:"Observed: wait cut from 90 to 60 seconds, with no stated goal. Unanswered offers went from 2.3% to 18.0%."},
+ {w:"Show a confidence score next to a hero's stated availability",b:"NOT BUILT",k:"no",r:"NOT SHIPPED",rk:"na",e:"Observed: committed for 4.2 on the roadmap, absent from the release page, the changelog and the code. The roadmap still says Committed."},
+ {w:"Keep console filters between sessions",b:"BUILT",k:"yes",r:"WORKED",rk:"yes",e:"Observed: handlers thanked support for it. But filters reset without warning after updates (several tickets)."},
+ {w:"Fix the duplicate notification when an offer is resent",b:"BUILT",k:"yes",r:"WORKED",rk:"yes",e:"Observed: 3 duplicate-alert tickets before 12 Aug, none after."},
+ {w:"Fix tag order and the report time zone",b:"BUILT",k:"yes",r:"WORKED",rk:"yes",e:"Observed: one ticket each before 12 Aug, none since. Absence of tickets is not proof."}
+];
+(function(){var box=document.getElementById("score");SCORE.forEach(function(s){var d=el("div","row");d.innerHTML='<div class="what"><b>'+s.w+'</b></div><span class="stampbox s-'+s.k+'">'+s.b+'</span><span class="stampbox s-'+s.rk+'">'+s.r+'</span><div class="ev">'+s.e+'</div>';box.appendChild(d);});})();
+
+var VIL=[
+ {n:"A missed offer counts as a refusal",s:"High",f:["history.py"],e:"Observed: the four quiet heroes missed 59% of their offers after 4.2, against 2.9% before. Estimated: each miss still costs 0.12.",t:"obs"},
+ {n:"Scores never come back on their own",s:"High",f:["history.py"],e:"Observed in the code: a 2019 note asks whether scores should drift back and says it was left as is. Estimated: all four quiet heroes' scores reach zero.",t:"est"},
+ {n:"The wait was cut with no safety net",s:"High",f:["config.py","offer.py"],e:"Observed: 90 to 60 seconds, no stated goal or target, no check that the phone received the offer.",t:"obs"},
+ {n:"A low score can outrank closeness",s:"High",f:["routing.py","config.py"],e:"Estimated: a perfect-record neighbour beats a zero-score hero whenever the neighbour is within about 19 minutes of the scene.",t:"est"},
+ {n:"Heroes can fade out and nobody is told",s:"High",f:["Not in the code folder"],e:"Observed: 10 open tickets each for Farlight and The Undertow, filed over about three weeks, none answered.",t:"obs"},
+ {n:"The list stops after one offer",s:"Medium",f:["offer.py","availability.py"],e:"Observed: 82% of callouts nobody took had one offer. The code is meant to keep going down the list.",t:"obs"},
+ {n:"Scores may live only in memory",s:"Medium",f:["history.py"],e:"Observed in the code: scores sit in a plain list that would reset on a restart. Not known whether 4.2 restarted the service.",t:"est"},
+ {n:"Refusers and others are treated alike",s:"Medium",f:["config.py"],e:"Observed: the engineering manager asked on 14 Aug whether the new weights were meant to apply to heroes who turn jobs down. No answer is recorded.",t:"obs"},
+ {n:"Heroes already on a job can be offered another",s:"Low",f:["availability.py"],e:"Observed: 11 cases of an offer within 5 minutes of accepting one, and 6 were accepted. Rare, but unexplained.",t:"obs"},
+ {n:"Free-or-busy list can't be checked",s:"Unknown",f:["availability.py"],e:"Estimated: the file is a placeholder in this folder, so we can't see how heroes are marked available.",t:"est"}
+];
+var FILES=["All","history.py","offer.py","routing.py","config.py","availability.py","Not in the code folder"];
+var curFile="All";
+function renderVil(){var box=document.getElementById("cards");box.innerHTML="";VIL.forEach(function(v){if(curFile!=="All"&&v.f.indexOf(curFile)<0)return;var c=el("div","card");c.innerHTML='<span class="sev '+v.s+'">'+v.s+'</span>'+tagHtml(v.t)+'<h3 style="margin-top:6px">'+v.n+'</h3><div>'+v.f.map(function(x){return '<span class="fname">'+x+'</span>';}).join("")+'</div><p style="margin:8px 0 0;font-size:14px">'+v.e+'</p>';box.appendChild(c);});
+ if(!box.children.length)box.appendChild(el("p","sub","Nothing filed under this file."));}
+(function(){var fb=document.getElementById("filters");FILES.forEach(function(f){var b=el("button","",f);b.setAttribute("aria-pressed",f===curFile?"true":"false");b.onclick=function(){curFile=f;Array.prototype.forEach.call(fb.children,function(x){x.setAttribute("aria-pressed",x.textContent===f?"true":"false");});renderVil();};fb.appendChild(b);});renderVil();})();
+
+function driftTo(s,days,d){if(d<=0)return s;var m=d*days;if(s>0.5)return Math.max(0.5,s-m);if(s<0.5)return Math.min(0.5,s+m);return s;}
+function sim(pings,r){var start=Math.max(RULES.neutral,r.floor),evs=[{h:0,after:start}],score=start,consec=0,i;
+ for(i=0;i<pings.length;i++){var p=pings[i],h=p[0],o=p[1],home=p[2],last=evs[evs.length-1];
+  var s=Math.max(r.floor,driftTo(last.after,(h-last.h)/24,r.drift));
+  if(o==="T"){s+=RULES.credit;consec=0;}
+  else if(o==="D"){consec=0;if(!(r.away&&!home))s-=r.ref;}
+  else{consec++;if(!(r.away&&!home)&&consec>r.free)s-=r.miss;}
+  s=Math.max(r.floor,Math.min(RULES.ceiling,s));evs.push({h:h,after:s,before:Math.max(r.floor,driftTo(last.after,(h-last.h)/24,r.drift))});}
+ function at(t){var k=0,j;for(j=0;j<evs.length;j++){if(evs[j].h<=t)k=j;else break;}return Math.max(r.floor,driftTo(evs[k].after,(t-evs[k].h)/24,r.drift));}
+ return {evs:evs,at:at,r:r};}
+var X0=44,X1=664,Y0=20,Y1=240;
+function px(h){return X0+h/TOTAL*(X1-X0);}
+function py(s){return Y1-s*(Y1-Y0);}
+function pathFor(sm){var evs=sm.evs,r=sm.r,d="M"+px(0).toFixed(1)+" "+py(evs[0].after).toFixed(1),i;
+ function seg(h0,s0,h1){var out="";if(r.drift>0&&s0!==0.5){var tc=h0+Math.abs(s0-0.5)/r.drift*24;if(tc<h1&&tc>h0)out+=" L"+px(tc).toFixed(1)+" "+py(Math.max(r.floor,0.5)).toFixed(1);}return out;}
+ for(i=1;i<evs.length;i++){var prev=evs[i-1];d+=seg(prev.h,prev.after,evs[i].h);d+=" L"+px(evs[i].h).toFixed(1)+" "+py(evs[i].before).toFixed(1)+" L"+px(evs[i].h).toFixed(1)+" "+py(evs[i].after).toFixed(1);}
+ var l=evs[evs.length-1];d+=seg(l.h,l.after,TOTAL)+" L"+px(TOTAL).toFixed(1)+" "+py(sm.at(TOTAL)).toFixed(1);return d;}
+function daysBelow(sm,th){var n=0,day;for(day=44;day<70;day++){if(sm.at((day+0.5)*24)<th)n++;}return n;}
+var TODAY={miss:RULES.penalty,ref:RULES.penalty,free:0,drift:0,floor:RULES.floor,away:false};
+var cur="Farlight";
+var ids={miss:"s-miss",ref:"s-ref",free:"s-free",drift:"s-drift",floor:"s-floor"};
+function fmt(id,v){return id==="s-free"?String(Math.round(v)):(id==="s-drift"?v.toFixed(3)+" a day":v.toFixed(2));}
+function rules(){return {miss:+document.getElementById("s-miss").value,ref:+document.getElementById("s-ref").value,free:+document.getElementById("s-free").value,drift:+document.getElementById("s-drift").value,floor:+document.getElementById("s-floor").value,away:document.getElementById("c-away").checked};}
+function renderLab(){var r=rules(),k;
+ for(k in ids){var inp=document.getElementById(ids[k]);document.getElementById("o-"+k).textContent=fmt(ids[k],+inp.value);}
+ var hero=H[cur],a=sim(hero.pings,TODAY),b=sim(hero.pings,r),svg=document.getElementById("chart"),g="",i,v;
+ for(i=0;i<=4;i++){v=i/4;g+='<line x1="'+X0+'" x2="'+X1+'" y1="'+py(v)+'" y2="'+py(v)+'" stroke="currentColor" stroke-opacity=".18"/><text x="'+(X0-6)+'" y="'+(py(v)+4)+'" text-anchor="end" font-size="11" fill="currentColor">'+v.toFixed(2)+'</text>';}
+ var labs=[["29 Jun",0],["13 Jul",14],["27 Jul",28],["10 Aug",42],["24 Aug",56],["7 Sep",70]];
+ labs.forEach(function(l){var x=px(l[1]*24);g+='<line x1="'+x+'" x2="'+x+'" y1="'+Y1+'" y2="'+(Y1+4)+'" stroke="currentColor"/><text x="'+x+'" y="'+(Y1+17)+'" text-anchor="middle" font-size="11" fill="currentColor">'+l[0]+'</text>';});
+ g+='<line x1="'+px(RELEASE)+'" x2="'+px(RELEASE)+'" y1="'+(Y0-6)+'" y2="'+(Y1+4)+'" stroke="#FF7A00" stroke-width="3" stroke-dasharray="6 4"/><text x="'+(px(RELEASE)-6)+'" y="'+(Y0+8)+'" text-anchor="end" font-size="12" font-weight="700" fill="currentColor">4.2 ships 12 Aug</text>';
+ g+='<path d="'+pathFor(a)+'" fill="none" stroke="#FF7A00" stroke-width="3.5" stroke-linejoin="round"/>';
+ g+='<path d="'+pathFor(b)+'" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="9 5" stroke-linejoin="round"/>';
+ var rows=[["T","Yes",262,"#0B8A44"],["D","Refused",278,"#C77700"],["M","Missed",294,"#C4161C"]];
+ rows.forEach(function(rw){g+='<text x="'+(X0-6)+'" y="'+(rw[2]+9)+'" text-anchor="end" font-size="11" fill="currentColor">'+rw[1]+'</text>';hero.pings.forEach(function(p){if(p[1]===rw[0])g+='<rect x="'+(px(p[0])-0.75).toFixed(1)+'" y="'+rw[2]+'" width="1.5" height="12" fill="'+rw[3]+'"/>';});});
+ svg.style.color=getComputedStyle(document.body).color;
+ svg.innerHTML=g;
+ document.getElementById("legend").innerHTML='<span><i style="border-color:#FF7A00"></i>Today\'s rules</span><span><i style="border-color:currentColor;border-top-style:dashed"></i>Your rules</span><span>Ticks: one per offer, by outcome</span>';
+ var n=hero.pings.length,post=hero.pings.filter(function(p){return p[0]>=RELEASE;}),miss=post.filter(function(p){return p[1]==="M";}).length,yes=post.filter(function(p){return p[1]==="T";}).length;
+ document.getElementById("chartnote").innerHTML='<b>'+cur+'</b> ('+hero.role.toLowerCase()+', home area '+hero.home+'): '+n+' real offers in total. After 12 Aug: '+post.length+' offers, '+yes+' accepted, '+miss+' missed. <span class="tag obs">Observed</span>';
+ var d1=daysBelow(a,0.2),d2=daysBelow(b,0.2);
+ document.getElementById("results").innerHTML='<div class="res">Score on 6 Sep, today\'s rules<br><b>'+a.at(TOTAL).toFixed(2)+'</b> <span class="tag est">Estimated</span></div><div class="res">Score on 6 Sep, your rules<br><b>'+b.at(TOTAL).toFixed(2)+'</b> <span class="tag est">Estimated</span></div><div class="res">Days under 0.20 after 12 Aug<br><b>'+d1+'</b> today, <b>'+d2+'</b> yours (of 26) <span class="tag est">Estimated</span></div>';}
+(function(){var hb=document.getElementById("heroes");ORDER.forEach(function(n){var b=el("button","",n+" <small>("+H[n].role+")</small>");b.setAttribute("aria-pressed",n===cur?"true":"false");b.onclick=function(){cur=n;Array.prototype.forEach.call(hb.children,function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});renderLab();};hb.appendChild(b);});
+ var k;for(k in ids){document.getElementById(ids[k]).addEventListener("input",renderLab);}
+ document.getElementById("c-away").addEventListener("change",renderLab);
+ document.getElementById("b-mine").onclick=function(){document.getElementById("s-miss").value=0.03;document.getElementById("s-ref").value=0.12;document.getElementById("s-free").value=2;document.getElementById("s-drift").value=0.02;document.getElementById("s-floor").value=0.3;document.getElementById("c-away").checked=false;renderLab();};
+ document.getElementById("b-today").onclick=function(){document.getElementById("s-miss").value=0.12;document.getElementById("s-ref").value=0.12;document.getElementById("s-free").value=0;document.getElementById("s-drift").value=0;document.getElementById("s-floor").value=0;document.getElementById("c-away").checked=false;renderLab();};
+ renderLab();})();
+
+var ORDERS=[
+ {t:"Count a missed offer lightly",f:"history.py",d:"A missed offer costs no more than a quarter of a refusal, and nothing if the phone never received it."},
+ {t:"Record whether the offer reached the phone",f:"offer.py",d:"Every offer is saved with delivered yes or no, so silence can be told apart from a refusal."},
+ {t:"Let scores recover",f:"history.py",d:"A score left alone drifts back toward the middle over days."},
+ {t:"Set a lowest score above zero",f:"config.py",d:"No hero can fall below the floor, so nobody ranks last forever."},
+ {t:"Guarantee an offer in their own area",f:"routing.py",d:"No hero goes 7 days without being offered a callout in their own area, whatever their score."},
+ {t:"Keep going down the list",f:"offer.py",d:"A callout never ends after one offer unless only one hero was free, and the reason is saved."},
+ {t:"Save scores and every ranking decision",f:"history.py and routing.py",d:"For any callout we can show who was on the list, their scores and the order."},
+ {t:"Alert when a hero goes quiet",f:"New, with the console",d:"The handler and Product are told within 48 hours when offers drop by half or the last three were missed."},
+ {t:"Test on past data before any release",f:"All of the above",d:"Replaying 29 Jun to 6 Sep shows no hero stuck at the bottom."},
+ {t:"Review the 60-second wait with real answer times",f:"config.py",d:"Time-to-accept data has been reviewed and the wait is justified in writing."}
+];
+var KEY="case-file-4-2-orders",done={};
+try{done=JSON.parse(localStorage.getItem(KEY)||"{}")||{};}catch(e){done={};}
+function saveDone(){try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}}
+function renderBar(){var n=ORDERS.filter(function(o,i){return done[i];}).length,pct=Math.round(n/ORDERS.length*100);document.getElementById("barfill").style.width=pct+"%";document.getElementById("bartext").textContent=n+" of "+ORDERS.length+" done";document.getElementById("bar").setAttribute("aria-valuenow",pct);}
+(function(){var box=document.getElementById("todo");ORDERS.forEach(function(o,i){var l=el("label");l.innerHTML='<input type="checkbox" id="od'+i+'"'+(done[i]?" checked":"")+'><span><b>'+(i+1)+'. '+o.t+'</b><br><span class="fname">'+o.f+'</span><br><span class="done"><b>Done when:</b> '+o.d+'</span></span>';l.querySelector("input").addEventListener("change",function(ev){done[i]=ev.target.checked;saveDone();renderBar();});box.appendChild(l);});renderBar();
+ document.getElementById("copy").onclick=function(){var txt="ORDERS FOR THE DEVELOPER: Release 4.2\nGoal: no hero leaves the system silently because of missed, ignored or declined offers.\n\n"+ORDERS.map(function(o,i){return (done[i]?"[x] ":"[ ] ")+(i+1)+". "+o.t+" ("+o.f+")\n    Done when: "+o.d;}).join("\n");
+  var ta=document.getElementById("fallback"),msg=document.getElementById("copied");
+  function fb(){ta.hidden=false;ta.value=txt;ta.focus();ta.select();msg.textContent="Select and copy the text below.";}
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){msg.textContent="Copied.";ta.hidden=true;},fb);}else{fb();}}catch(e){fb();}};})();
+
+var LOOSE=[
+ {q:"Did the 4.2 release restart the service, and do scores survive a restart?",w:"Engineering manager (deployment records) and the staff engineer (how scores are stored)."},
+ {q:"What are the real scores? Everything in the lab is reconstructed.",w:"Staff engineer."},
+ {q:"How long was each offer's travel time? We only know area names, not minutes.",w:"Engineering manager."},
+ {q:"Were the four quiet heroes marked available, and did their phones receive the offers?",w:"Staff engineer, and each hero's handler."},
+ {q:"Why does the list stop after one offer on most callouts nobody took?",w:"Staff engineer."},
+ {q:"How long do heroes take to accept? The time-to-accept measure is not in the database.",w:"Engineering manager."},
+ {q:"Are Vesper and Meteor Mite quiet from their handlers' point of view? Neither handler filed a ticket.",w:"Their handlers, through the support lead."},
+ {q:"Were the new weights meant to apply to heroes who turn jobs down? Asked on 14 Aug, no answer on record.",w:"Staff engineer."},
+ {q:"Which squeezed-out items, including the confidence score, are still Q3 commitments?",w:"Director of Product."},
+ {q:"What research led to 4.2? The interviews on file are from September, after the release.",w:"Director of Product and the product designer."}
+];
+(function(){var box=document.getElementById("loose");LOOSE.forEach(function(l){var c=el("div","card");c.innerHTML='<b>'+l.q+'</b><p class="sub" style="margin:6px 0 0"><b>Ask:</b> '+l.w+'</p>';box.appendChild(c);});})();
+
+(function(){var root=document.documentElement,btn=document.getElementById("theme");
+ try{var t=localStorage.getItem("case-file-theme");if(t==="dark"||t==="light")root.setAttribute("data-theme",t);}catch(e){}
+ btn.onclick=function(){var cur=root.getAttribute("data-theme")||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),nxt=cur==="dark"?"light":"dark";root.setAttribute("data-theme",nxt);try{localStorage.setItem("case-file-theme",nxt);}catch(e){}renderLab();};
+ if(window.matchMedia){var mq=window.matchMedia("(prefers-color-scheme: dark)");if(mq.addEventListener)mq.addEventListener("change",renderLab);}})();
+</script>

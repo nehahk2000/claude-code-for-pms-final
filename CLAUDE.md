@@ -49,7 +49,7 @@ before this was written down.
   15 minutes.
 - **Director of Product** (she): the user's director; gives room.
 - **Priya**: previous PM, sole Dispatch PM for 14 months; no handover overlap.
-- Names for these roles are in the wiki's Team directory, not yet matched here.
+- Names for these roles are in the wiki's Team directory. Matched so far: the engineering manager is Marcus Oyelaran (Engineering Manager, Dispatch), matched by role because wiki comments show roles, not names. The others are not matched yet.
 
 ### Vocabulary
 - **Responder**: the person in the field with a phone, who gets pinged.
@@ -185,3 +185,8 @@ down; the config doesn't distinguish. Unanswered.
 - Why that can outrank proximity: closeness is worth 0.60 but the yes-rate is worth 0.25 and the gap between a floor score and a perfect one is the full 0.25. A neighbour with a perfect record beats a floor-score home responder whenever the neighbour is within about 19 minutes of the scene (0.25 divided by 0.60, times the 45-minute horizon). Illustration with assumed travel times (10 minutes for Farlight, 25 for a neighbour): Farlight ranks first on 11 Aug (0.83 against 0.65) and second by 28 Aug (0.62 against 0.65).
 - Misses cost 0.12 and were frequent after 4.2 because of the 60-second window (2% to 18%), so scores fell quickly; once low, a responder is asked less and has fewer chances to recover. history.py never lets a score recover on its own (2019 note).
 - Open: scores in history.py sit in a plain in-memory dictionary, so they may reset to 0.5 whenever the service restarts. Ask the staff engineer whether that happened at the 4.2 release. Travel times and real scores would confirm or reject this explanation.
+
+**Marcus Oyelaran's comments on the 4.2 release page (added after the fourth session)**
+- 14 Aug: asked twice whether the 4.2 change to who gets pinged was meant to apply to responders who turn jobs down, since the config does not distinguish them, and whether that was a decision or "just fell out that way". No answer is recorded; the staff engineer was away until the 24th. Put this on the list of questions for the staff engineer.
+- 13 Aug: 4.2 "went clean", no rollback, no overnight pages. 18 Aug: could get "something rough" for answer rates but not the real weekly numbers. 26 Aug: put the ticket volume down to the August dip. 28 Aug: wanted to regroup on the 4.2 picture with the new PM after a week, without handing over a conclusion.
+- Caveat: the match between "engineering manager" in the comments and Marcus is by role. Only the 4.2 page's comments have been read; other pages may carry comments not yet checked.
