@@ -135,3 +135,45 @@ add the other findings to CLAUDE.md including all visualization and blasts maps
 
 ### 38.
 Also, tell me what area was least impacted where the pings did not go outside or missed a whole lot. Provide all this information area wise
+
+### 39.
+can you explain what does step 7 means
+
+### 40.
+can we get more details for Farlight from  offer.py, availability.py , routing.py and history.py
+
+### 41.
+tell me if restart happened after 4.2
+
+### 42.
+can you tell me looking at the routing.py why the ping was turned down by farlight based on his skills
+
+### 43.
+“Did the 4.2 release restart the service, and do acceptance scores survive a restart?. What will happen if you add this as an open question in Claude.md?
+
+### 44.
+can you pull the similar data for others like Farlight who stopped getting pings after certain time
+
+### 45.
+I want the scores list as you had provided for farlight
+
+### 46.
+have these weigtages changed after 4.2 with respect to location, skills etc like .6, .15 and .25. What was it previously?
+
+### 47.
+Does that mean , the score went down because the pings were coming outside 20 minutes of where farlight is
+
+### 48.
+use all the data sources plus this code walkthrough to help paint a picture for me on what is going on. i want to understand if what was asked to be build was actually built as intended, whether there's any bugs, and what would i tell a developer to do if we decided we want to make any change to prevent heros from silently existing the system because they missed/ignored/rejected a call
+
+### 49.
+was an AB testing done when the time was changes from 90s to 60 s and the driving time was reduced from 38 minutes to 19 minutes and responder was penalized?
+
+### 50.
+Did Marcus asked a question
+
+### 51.
+add this to CLAUDE.md
+
+### 52.
+Install news skills
