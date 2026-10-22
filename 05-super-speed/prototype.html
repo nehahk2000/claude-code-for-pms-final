@@ -1,0 +1,352 @@
+<title>Quiet Hero Prototype</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+<style>
+:root{--page:#1E50C8;--dots:rgba(255,255,255,.2);--panel:#FFFFFF;--ink:#0B1F4B;--ink2:#2B3A66;--line:#0B1F4B;--shadow:#0B1F4B;--yellow:#FFD60A;--orange:#FF7A00;--good:#0B6B35;--goodbg:#D9F5E3;--bad:#B3121A;--badbg:#FFE1DE;--warn:#8A4B00;--warnbg:#FFF0C2;--chip:#EAF0FF;--head:#FFD60A;--headink:#0B1F4B;--phone:#F3F5FB}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0A1740;--dots:rgba(255,255,255,.08);--panel:#16224D;--ink:#F5F7FF;--ink2:#C9D3F5;--line:#02081F;--shadow:#02081F;--good:#7FE3A5;--goodbg:#0F3B27;--bad:#FF9C95;--badbg:#4A1518;--warn:#FFD27A;--warnbg:#4A3507;--chip:#22316B;--phone:#101A3E;color-scheme:dark}}
+:root[data-theme="dark"]{--page:#0A1740;--dots:rgba(255,255,255,.08);--panel:#16224D;--ink:#F5F7FF;--ink2:#C9D3F5;--line:#02081F;--shadow:#02081F;--good:#7FE3A5;--goodbg:#0F3B27;--bad:#FF9C95;--badbg:#4A1518;--warn:#FFD27A;--warnbg:#4A3507;--chip:#22316B;--phone:#101A3E;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--page);background-image:radial-gradient(var(--dots) 1.6px,transparent 1.8px);background-size:14px 14px;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding-block:20px 56px;padding-inline:16px}
+h1,h2,h3,.disp{font-family:"Bangers","Impact","Arial Black",sans-serif;font-weight:400;letter-spacing:.04em}
+h1{font-size:clamp(32px,8vw,54px);line-height:1.02;margin:0;color:var(--headink);text-shadow:3px 3px 0 var(--orange)}
+h2{font-size:clamp(24px,5.5vw,32px);margin:0 0 8px;line-height:1.1}
+h3{font-size:20px;margin:0 0 4px}
+.top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.banner{background:var(--head);border:4px solid var(--line);box-shadow:6px 6px 0 var(--shadow);padding:14px 18px;flex:1 1 280px;min-width:0}
+.banner p{margin:6px 0 0;color:var(--headink);font-weight:600}
+.panel{background:var(--panel);border:4px solid var(--line);box-shadow:6px 6px 0 var(--shadow);padding:16px 18px;margin-top:30px;min-width:0}
+.panel>.kick{display:inline-block;background:var(--orange);color:#0B1F4B;border:3px solid var(--line);font-family:"Bangers","Impact",sans-serif;letter-spacing:.06em;padding:2px 10px;margin:-32px 0 8px;font-size:18px}
+p{margin:0 0 10px}
+.sub{color:var(--ink2);font-size:15px}
+button,select,input{font:inherit}
+button{cursor:pointer;color:var(--ink);background:var(--chip);border:3px solid var(--line);padding:6px 12px;box-shadow:3px 3px 0 var(--shadow);font-weight:600}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+button[aria-pressed="true"],button.on{background:var(--yellow);color:#0B1F4B}
+:focus-visible{outline:4px solid var(--orange);outline-offset:2px}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;padding:1px 7px;border:2px solid var(--line);margin-left:6px;vertical-align:middle;text-transform:uppercase}
+.tag.obs{background:var(--goodbg);color:var(--good)}
+.tag.est{background:var(--warnbg);color:var(--warn)}
+.tag.smp{background:var(--badbg);color:var(--bad)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.ctl{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));margin:10px 0}
+.ctl label{display:block;font-size:14px;font-weight:600}
+.ctl output{font-family:"Bangers","Impact",sans-serif;font-size:18px;letter-spacing:.04em}
+input[type=range]{width:100%;accent-color:var(--orange)}
+.chartbox{border:3px solid var(--line);background:var(--panel);padding:6px}
+.chartbox svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;margin:8px 0}
+.legend i{display:inline-block;width:26px;height:0;border-top:4px solid;vertical-align:middle;margin-right:6px}
+.legend b.sw{display:inline-block;width:18px;height:12px;vertical-align:middle;margin-right:6px;background:rgba(255,122,0,.3);border:2px solid #FF7A00}
+.res{border:3px solid var(--line);background:var(--chip);padding:8px 12px;margin-top:8px}
+.res b{font-family:"Bangers","Impact",sans-serif;font-size:22px;font-weight:400;letter-spacing:.04em}
+.grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.card{border:3px solid var(--line);background:var(--chip);padding:10px 12px;box-shadow:3px 3px 0 var(--shadow);min-width:0}
+.badge{display:inline-block;font-weight:800;font-size:12px;padding:0 8px;border:2px solid var(--line);text-transform:uppercase;letter-spacing:.05em}
+.badge.q{background:var(--badbg);color:var(--bad)}
+.badge.ok{background:var(--goodbg);color:var(--good)}
+.stat{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;font-size:14px;margin:8px 0}
+.stat dt{color:var(--ink2)}
+.stat dd{margin:0;font-weight:600}
+.alert{border:3px solid var(--bad);background:var(--badbg);padding:8px 10px;margin-top:8px}
+.alert .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.note{background:var(--warnbg);color:var(--ink);border:3px solid var(--line);padding:8px 12px;margin:10px 0;font-size:14px}
+.phone{max-width:300px;margin:6px auto;border:5px solid var(--line);border-radius:26px;background:var(--phone);padding:16px 12px;box-shadow:5px 5px 0 var(--shadow)}
+.bubble{background:var(--panel);border:3px solid var(--line);border-radius:14px;padding:10px 12px;font-size:14px}
+.phone .acts{display:grid;gap:8px;margin-top:10px}
+.inboxes{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.inbox{border:3px solid var(--line);background:var(--chip);padding:8px 12px;min-height:90px}
+.inbox ul{margin:6px 0;padding-left:18px;font-size:14px}
+.tests{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.status{display:inline-block;font-family:"Bangers","Impact",sans-serif;letter-spacing:.06em;font-size:20px;padding:0 12px;border:3px solid var(--line);transform:rotate(-2deg)}
+.status.go{background:var(--goodbg);color:var(--good)}
+.status.stop{background:var(--badbg);color:var(--bad)}
+.status.mid{background:var(--warnbg);color:var(--warn)}
+.mini{margin:8px 0}
+.mini svg{width:100%;height:auto;display:block}
+.small{font-size:13px;color:var(--ink2)}
+.foot{color:#fff;font-size:13px;margin-top:22px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap" id="wrap">
+<div class="note" id="err" hidden role="alert"></div>
+<noscript><div class="note">This page needs scripts to show its charts. Your viewer has them switched off.</div></noscript>
+<div class="top">
+  <div class="banner">
+    <h1>Quiet hero prototype</h1>
+    <p>Pick a hero and a rule, then see what Kip sees and what the hero reads. Click everything. Fictional teaching scenario.</p>
+  </div>
+  <button id="theme" aria-label="Switch between light and dark version">Light / dark</button>
+</div>
+<p class="sub" style="color:#fff;margin-top:12px">
+ <span class="tag obs">Real</span> from the Rook database, 29 Jun to 6 Sep.
+ <span class="tag est">Estimate</span> worked out from the code or a stated example.
+ <span class="tag smp">Sample</span> invented, only to show how a screen behaves.
+</p>
+
+<section class="panel" aria-labelledby="h1s">
+  <span class="kick">STEP 1</span>
+  <h2 id="h1s">Pick a hero and a rule</h2>
+  <p class="sub">Each hero's real offers are replayed in order. Today's rules: a yes adds 0.08, a no or a missed offer takes off 0.12, points never come back. The dashed line uses the rule you pick. <b>This shows what would have happened to the points. It is not a forecast.</b></p>
+  <div class="row" id="heroes" role="group" aria-label="Choose a hero"></div>
+  <div class="row" id="presets" role="group" aria-label="Choose a rule">
+    <button data-p="A">A. Leave it</button>
+    <button data-p="B">B. A miss costs less</button>
+    <button data-p="C">C. B + points drift back + lowest score + next job first</button>
+  </div>
+  <div class="ctl">
+    <div><label for="s-miss">Cost of a missed offer <output id="o-miss"></output></label><input type="range" id="s-miss" min="0" max="0.12" step="0.01" value="0.12"></div>
+    <div><label for="s-ref">Cost of a no <output id="o-ref"></output></label><input type="range" id="s-ref" min="0" max="0.24" step="0.01" value="0.12"></div>
+    <div><label for="s-drift">Points drift back, per day <output id="o-drift"></output></label><input type="range" id="s-drift" min="0" max="0.1" step="0.005" value="0"></div>
+    <div><label for="s-floor">Lowest points allowed <output id="o-floor"></output></label><input type="range" id="s-floor" min="0" max="0.6" step="0.05" value="0"></div>
+    <div><label><input type="checkbox" id="c-prio"> A quiet hero gets the next job in their own area</label></div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div class="chartbox"><svg id="chart" viewBox="0 0 680 330" role="img" aria-label="Chart of the hero's points over time under today's rules and the chosen rules, with the dates the hero would be flagged quiet"></svg></div>
+  <p class="small" id="chartnote" style="margin-top:6px"></p>
+</section>
+
+<section class="panel" aria-labelledby="h2s">
+  <span class="kick">STEP 2</span>
+  <h2 id="h2s">Pick a moment</h2>
+  <p class="sub">Drag the date, or jump to when the hero is first flagged quiet. A hero is quiet when they have had no offer in their own area for 3 days, or their last 3 offers were all missed.</p>
+  <label for="s-date" style="font-weight:600">Date: <span id="datelab" class="disp" style="font-size:22px"></span></label>
+  <input type="range" id="s-date" min="0" max="1680" step="6" value="0">
+  <div class="row"><button id="jump">Jump to first flag after 4.2</button></div>
+  <div class="row" id="chips" aria-label="Every flag for this hero"></div>
+  <p class="small" id="flagnote"></p>
+  <div class="res" id="rank" aria-live="polite"></div>
+</section>
+
+<section class="panel" aria-labelledby="h3s">
+  <span class="kick">STEP 3</span>
+  <h2 id="h3s">What the handler sees</h2>
+  <p class="sub" id="kipsub"></p>
+  <div class="grid2" id="cards"></div>
+  <div id="msgs"></div>
+</section>
+
+<section class="panel" aria-labelledby="h4s">
+  <span class="kick">STEP 4</span>
+  <h2 id="h4s">What the hero reads</h2>
+  <p class="sub">A text, not an offer, so it still arrives if offers don't. The flag and the text are part of the fix. They don't depend on which scoring rule you picked.</p>
+  <div id="phonebox"></div>
+</section>
+
+<section class="panel" aria-labelledby="h5s">
+  <span class="kick">STEP 5</span>
+  <h2 id="h5s">Where the messages go</h2>
+  <div class="inboxes">
+    <div class="inbox"><h3>Product inbox</h3><ul id="inP"></ul><button id="clearP">Clear</button></div>
+    <div class="inbox"><h3>Engineering inbox</h3><ul id="inE"></ul><button id="clearE">Clear</button></div>
+  </div>
+</section>
+
+<section class="panel" aria-labelledby="h6s">
+  <span class="kick">STEP 6</span>
+  <h2 id="h6s">The two tests <span class="tag smp">Sample numbers</span></h2>
+  <p class="sub">No test has run. These numbers are invented to show how the screen would look and when it would say stop. Pass and stop lines are from the brief.</p>
+  <div class="row" id="scen" role="group" aria-label="Choose a sample scenario">
+    <button data-s="well">Going well</button><button data-s="stop">Trips a stop rule</button><button data-s="mixed">Mixed</button>
+  </div>
+  <div class="tests" id="tests"></div>
+</section>
+
+<p class="foot"><b>Limits:</b> the flag fires from real history, so it fires on the same dates under every rule. The replay cannot show that other rules would have produced fewer missed offers. Real points are not stored, so every points line is a reconstruction. Only the four heroes who went quiet are shown, plus The Gale for Kip's second card. Heroes appear only under their cover names.</p>
+</div>
+
+<script>
+(function(){
+window.addEventListener('error',function(e){var b=document.getElementById('err');if(b){b.hidden=false;b.textContent='Something went wrong in this page: '+e.message+' (line '+e.lineno+'). Please tell Claude.';}});
+var DATA={"Farlight":{"home":"Uptown","pings":[[31.6,"T",1],[47.9,"D",0],[56.9,"T",1],[59.5,"D",0],[59.5,"D",1],[68.9,"T",1],[69.3,"T",1],[69.9,"T",1],[80.6,"T",1],[81.1,"T",1],[112.2,"T",1],[120.8,"T",1],[172.4,"T",1],[202.0,"T",1],[216.2,"D",1],[229.8,"T",1],[248.3,"T",1],[258.8,"T",1],[259.7,"D",0],[260.2,"D",0],[261.4,"T",1],[296.8,"T",1],[302.0,"T",1],[327.6,"T",1],[351.5,"T",1],[359.4,"M",0],[389.1,"T",1],[407.4,"T",1],[422.3,"T",1],[427.1,"T",1],[440.3,"D",0],[474.6,"D",0],[475.6,"T",1],[477.3,"T",1],[479.3,"T",1],[514.6,"T",1],[515.5,"T",1],[535.7,"T",1],[538.8,"T",1],[569.5,"M",0],[570.8,"T",1],[597.9,"T",1],[599.5,"D",0],[604.9,"T",1],[613.5,"D",1],[619.6,"T",1],[624.1,"T",1],[684.6,"T",1],[685.3,"T",1],[718.9,"D",0],[737.5,"T",1],[765.8,"T",1],[776.0,"T",1],[793.1,"T",1],[807.8,"T",1],[815.5,"D",1],[825.3,"T",1],[827.0,"D",0],[834.7,"T",1],[836.9,"T",1],[855.7,"D",0],[884.0,"T",1],[893.5,"T",1],[897.8,"T",1],[904.4,"T",1],[907.8,"T",1],[924.3,"T",1],[948.6,"D",0],[954.7,"T",1],[960.4,"M",0],[970.7,"T",1],[980.3,"D",0],[1023.6,"T",1],[1025.6,"T",1],[1029.1,"D",0],[1072.6,"T",1],[1075.9,"M",0],[1076.0,"D",0],[1089.8,"M",1],[1094.9,"M",0],[1120.5,"M",1],[1125.4,"T",1],[1237.5,"M",1],[1307.2,"D",1],[1333.9,"M",0],[1459.5,"M",0]]},"The Undertow":{"home":"Harborside","pings":[[5.7,"T",1],[7.4,"T",1],[13.9,"D",0],[14.5,"T",1],[15.3,"T",1],[18.3,"D",0],[33.0,"D",0],[58.7,"T",1],[67.4,"T",1],[113.5,"T",1],[113.8,"T",1],[132.5,"T",1],[184.6,"T",1],[206.3,"D",1],[209.2,"T",1],[209.3,"T",1],[236.1,"T",1],[237.4,"T",1],[242.6,"T",1],[248.6,"D",1],[261.5,"T",1],[271.7,"T",1],[304.2,"T",1],[340.0,"T",1],[356.4,"M",0],[397.1,"T",1],[399.9,"T",1],[425.7,"T",1],[427.9,"T",1],[429.6,"T",1],[449.9,"D",0],[449.9,"D",0],[450.0,"T",1],[450.8,"T",1],[463.7,"T",1],[505.6,"D",1],[511.0,"D",1],[520.3,"T",1],[522.0,"T",1],[522.2,"T",1],[570.4,"T",1],[574.6,"T",1],[591.5,"T",1],[595.0,"T",1],[636.3,"T",1],[648.5,"T",1],[654.3,"D",0],[667.8,"T",1],[680.9,"T",1],[683.3,"T",1],[705.5,"T",1],[713.9,"T",1],[724.1,"T",1],[726.5,"T",1],[737.0,"T",1],[786.4,"T",1],[788.1,"D",0],[800.1,"D",0],[806.1,"T",1],[810.8,"T",1],[874.4,"T",1],[876.7,"D",1],[905.8,"T",1],[906.3,"T",1],[908.9,"D",0],[912.8,"T",1],[940.4,"D",0],[946.5,"T",1],[955.9,"T",1],[958.2,"T",1],[959.2,"T",1],[974.0,"T",1],[1026.8,"T",1],[1027.8,"T",1],[1051.0,"D",0],[1065.1,"M",0],[1091.4,"M",1],[1093.5,"T",1],[1095.9,"T",1],[1098.7,"M",1],[1106.9,"M",0],[1114.4,"M",0],[1165.8,"D",0],[1190.2,"D",0],[1195.1,"T",1],[1216.3,"M",1],[1288.8,"M",1],[1439.3,"M",1],[1647.3,"M",1]]},"Vesper":{"home":"Old Town","pings":[[0.1,"T",1],[39.1,"D",0],[43.3,"T",1],[61.5,"T",1],[67.4,"T",1],[68.3,"T",1],[80.7,"T",1],[87.6,"T",1],[103.5,"T",1],[110.9,"T",1],[116.2,"D",0],[121.0,"T",1],[134.3,"T",1],[166.1,"D",1],[176.8,"T",1],[194.0,"M",0],[210.7,"T",1],[212.9,"T",1],[233.2,"T",1],[263.0,"T",1],[301.8,"T",1],[302.3,"D",0],[303.1,"T",1],[309.3,"T",1],[309.5,"D",0],[322.9,"T",1],[328.1,"T",1],[338.2,"T",1],[354.4,"T",1],[354.7,"T",1],[379.2,"T",1],[396.1,"T",1],[403.8,"T",1],[404.0,"T",1],[427.0,"D",0],[429.4,"T",1],[449.4,"T",1],[451.5,"M",0],[452.3,"T",1],[493.8,"T",1],[496.0,"T",1],[499.6,"T",1],[513.8,"D",0],[514.2,"D",0],[525.3,"T",1],[553.9,"T",1],[563.3,"T",1],[563.5,"T",1],[568.9,"T",1],[570.4,"T",1],[592.9,"T",1],[601.2,"T",1],[639.8,"T",1],[643.2,"D",0],[649.1,"T",1],[671.1,"T",1],[680.6,"T",1],[692.8,"T",1],[703.4,"T",1],[707.6,"T",1],[710.8,"T",1],[723.5,"T",1],[746.5,"M",0],[751.8,"T",1],[757.4,"T",1],[767.3,"T",1],[779.5,"T",1],[785.0,"T",1],[811.2,"D",0],[870.7,"T",1],[879.2,"T",1],[879.3,"T",1],[882.1,"T",1],[904.8,"T",1],[908.4,"T",1],[917.8,"T",1],[921.7,"T",1],[924.3,"D",0],[929.8,"T",1],[949.0,"T",1],[953.1,"T",1],[953.9,"D",0],[979.9,"T",1],[1010.0,"T",1],[1021.6,"D",1],[1053.0,"T",1],[1087.6,"M",0],[1106.9,"T",1],[1121.2,"M",0],[1141.0,"T",1],[1143.6,"D",0],[1149.0,"T",1],[1162.8,"M",0],[1166.1,"M",0],[1168.1,"T",1],[1184.9,"T",1],[1242.7,"M",1],[1320.2,"M",1],[1325.6,"D",0],[1340.3,"M",0],[1365.7,"D",1],[1410.2,"M",1],[1547.7,"M",1]]},"Meteor Mite":{"home":"Eastgate","pings":[[56.7,"T",1],[63.0,"D",1],[73.2,"T",1],[77.7,"T",1],[114.4,"T",1],[129.0,"D",1],[131.9,"D",0],[134.8,"D",1],[143.6,"T",1],[156.3,"T",1],[162.3,"T",1],[183.3,"T",1],[203.7,"T",1],[209.3,"T",1],[215.0,"T",1],[224.8,"T",1],[235.7,"T",1],[282.3,"D",0],[282.7,"T",1],[308.5,"D",1],[325.4,"T",1],[330.9,"T",1],[336.0,"D",0],[345.2,"T",1],[346.8,"D",1],[355.3,"T",1],[367.6,"D",1],[396.6,"T",1],[453.0,"T",1],[488.8,"T",1],[489.2,"T",1],[501.0,"D",0],[502.8,"D",0],[520.4,"T",1],[522.4,"T",1],[585.8,"M",1],[586.7,"D",1],[595.5,"T",1],[597.3,"T",1],[612.6,"T",1],[617.3,"D",1],[619.2,"D",1],[633.1,"T",1],[634.6,"T",1],[672.8,"T",1],[688.2,"T",1],[690.2,"T",1],[715.1,"T",1],[715.8,"M",1],[718.5,"T",1],[761.2,"T",1],[762.9,"D",0],[765.4,"T",1],[802.2,"T",1],[831.8,"T",1],[835.2,"D",1],[859.6,"T",1],[884.6,"T",1],[901.8,"D",1],[902.9,"T",1],[913.2,"D",0],[913.4,"T",1],[917.0,"D",0],[928.3,"T",1],[967.9,"T",1],[976.9,"T",1],[980.7,"T",1],[1022.1,"D",1],[1029.3,"T",1],[1038.7,"T",1],[1075.1,"D",0],[1093.7,"M",0],[1095.2,"M",1],[1111.4,"M",1],[1143.3,"T",1],[1147.7,"T",1],[1163.3,"M",1],[1207.6,"D",1],[1241.5,"T",1],[1264.7,"M",1],[1316.9,"M",0],[1436.1,"D",0],[1473.3,"M",1],[1647.1,"M",0]]},"The Gale":{"home":"Eastgate","pings":[[6.9,"T",1],[8.6,"T",1],[11.3,"T",1],[17.7,"T",1],[47.9,"D",0],[63.0,"T",1],[85.9,"T",1],[110.1,"T",1],[116.1,"T",1],[134.8,"T",1],[143.6,"M",1],[156.3,"D",1],[158.1,"T",1],[176.1,"T",1],[183.3,"D",1],[188.0,"T",1],[203.7,"D",1],[213.6,"T",1],[231.1,"D",0],[234.4,"T",1],[308.5,"T",1],[319.9,"T",1],[320.4,"T",1],[322.8,"T",1],[323.7,"T",1],[336.6,"T",1],[347.4,"T",1],[347.5,"T",1],[355.3,"D",1],[367.6,"T",1],[396.6,"D",1],[398.6,"T",1],[417.1,"T",1],[421.5,"T",1],[436.1,"T",1],[439.5,"T",1],[453.0,"D",1],[464.8,"T",1],[545.1,"D",0],[546.8,"T",1],[561.7,"D",0],[562.4,"T",1],[572.6,"T",1],[585.8,"T",1],[586.7,"T",1],[615.0,"M",0],[617.1,"T",1],[619.2,"T",1],[623.1,"T",1],[631.1,"T",1],[667.9,"T",1],[668.7,"T",1],[690.8,"T",1],[710.6,"T",1],[715.8,"T",1],[717.7,"T",1],[720.5,"T",1],[785.9,"T",1],[788.2,"T",1],[789.4,"T",1],[805.1,"T",1],[817.5,"T",1],[830.3,"M",1],[831.8,"D",1],[835.2,"T",1],[841.5,"T",1],[848.5,"D",1],[860.0,"T",1],[876.5,"T",1],[880.7,"T",1],[901.8,"T",1],[913.4,"D",1],[931.7,"D",0],[990.6,"T",1],[998.4,"T",1],[1006.4,"T",1],[1007.0,"T",1],[1007.6,"T",1],[1022.1,"T",1],[1043.2,"T",1],[1046.9,"M",1],[1051.0,"T",1],[1075.1,"M",0],[1093.7,"M",0],[1095.2,"T",1],[1111.5,"T",1],[1115.8,"T",1],[1123.7,"D",0],[1126.7,"T",1],[1143.3,"D",1],[1161.8,"T",1],[1173.6,"D",0],[1175.3,"T",1],[1193.1,"T",1],[1195.4,"T",1],[1195.7,"D",0],[1196.9,"T",1],[1198.6,"T",1],[1207.6,"T",1],[1210.8,"T",1],[1218.3,"D",0],[1241.5,"M",1],[1260.6,"D",1],[1289.2,"T",1],[1294.0,"T",1],[1307.8,"T",1],[1308.4,"T",1],[1316.9,"M",0],[1330.1,"T",1],[1338.6,"T",1],[1361.2,"T",1],[1361.2,"M",0],[1363.0,"M",1],[1369.9,"T",1],[1379.3,"T",1],[1380.2,"D",1],[1401.7,"T",1],[1404.6,"T",1],[1445.2,"T",1],[1446.7,"D",0],[1457.1,"T",1],[1457.5,"T",1],[1461.3,"T",1],[1473.3,"T",1],[1493.1,"T",1],[1495.4,"D",0],[1501.9,"D",0],[1506.4,"T",1],[1507.5,"T",1],[1507.7,"T",1],[1522.6,"D",1],[1529.7,"D",0],[1543.9,"T",1],[1553.9,"T",1],[1555.0,"T",1],[1556.0,"M",0],[1575.5,"T",1],[1596.7,"T",1],[1601.0,"T",1],[1606.4,"M",0],[1614.5,"T",1],[1615.2,"T",1],[1616.9,"T",1],[1624.6,"T",1],[1629.8,"T",1],[1644.3,"T",1],[1645.2,"T",1],[1648.0,"T",1],[1650.0,"T",1],[1650.3,"D",0],[1652.0,"T",1]]}};
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var BASE=Date.UTC(2026,5,29),TOTAL=1680,RELEASE=1056,CREDIT=0.08;
+var INFO={
+ "Meteor Mite":{handler:"Kip",sibling:"The Gale"},
+ "Farlight":{handler:"Linda",sibling:null},
+ "The Undertow":{handler:"Desmond",sibling:null},
+ "Vesper":{handler:"Aunt Dot",sibling:null}
+};
+var ORDER=["Meteor Mite","Farlight","The Undertow","Vesper"];
+var PRESET={A:{miss:0.12,ref:0.12,drift:0,floor:0,prio:false},B:{miss:0.03,ref:0.12,drift:0,floor:0,prio:false},C:{miss:0.03,ref:0.12,drift:0.02,floor:0.3,prio:true}};
+var TODAY={miss:0.12,ref:0.12,drift:0,floor:0,prio:false};
+var cur="Meteor Mite",preset="A",t=0;
+var away={},notices=[],inP=[],inE=[],checkMode="delivered",checkOpen=false;
+
+function pad(n){return n<10?"0"+n:""+n;}
+function dstr(h){var d=new Date(BASE+h*3600000);return d.getUTCDate()+" "+MON[d.getUTCMonth()];}
+function tstr(h){var d=new Date(BASE+h*3600000);return d.getUTCDate()+" "+MON[d.getUTCMonth()]+", "+pad(d.getUTCHours())+":00";}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e;}
+function $(id){return document.getElementById(id);}
+
+function driftTo(s,days,d){if(d<=0)return s;var m=d*days;if(s>0.5)return Math.max(0.5,s-m);if(s<0.5)return Math.min(0.5,s+m);return s;}
+function sim(pings,r){var start=Math.max(0.5,r.floor),evs=[{h:0,after:start}],i;
+ for(i=0;i<pings.length;i++){var p=pings[i],last=evs[evs.length-1];
+  var before=Math.max(r.floor,driftTo(last.after,(p[0]-last.h)/24,r.drift)),s=before;
+  if(p[1]==="T")s+=CREDIT;else if(p[1]==="D")s-=r.ref;else s-=r.miss;
+  s=Math.max(r.floor,Math.min(1,s));evs.push({h:p[0],after:s,before:before});}
+ function at(x){var k=0,j;for(j=0;j<evs.length;j++){if(evs[j].h<=x)k=j;else break;}return Math.max(r.floor,driftTo(evs[k].after,(x-evs[k].h)/24,r.drift));}
+ return {evs:evs,at:at,r:r};}
+
+function quietAt(pings,x){
+ var own=0,i,past=[];
+ for(i=0;i<pings.length;i++){if(pings[i][0]<=x){past.push(pings[i]);if(pings[i][2]===1)own=pings[i][0];}else break;}
+ var reasons=[];
+ if(x>=72&&x-own>=72)reasons.push("no offer in their own area for 3 days");
+ var l3=past.slice(-3);
+ if(l3.length===3&&l3.every(function(q){return q[1]==="M";}))reasons.push("last 3 offers missed");
+ return reasons;}
+var FLAGS={};
+function computeFlags(name){var p=DATA[name].pings,out=[],on=null,x;
+ for(x=0;x<=TOTAL;x+=1){var r=quietAt(p,x);if(r.length&&!on){on={s:x,e:TOTAL,reason:r.join(" and ")};}
+  else if(!r.length&&on){on.e=x;out.push(on);on=null;}}
+ if(on)out.push(on);return out;}
+Object.keys(INFO).forEach(function(n){FLAGS[n]=computeFlags(n);});
+Object.keys(DATA).forEach(function(n){if(!FLAGS[n])FLAGS[n]=computeFlags(n);});
+function flagAtT(name,x){var f=FLAGS[name],i;for(i=0;i<f.length;i++){if(x>=f[i].s&&x<f[i].e)return f[i];}return null;}
+function firstFlagAfter(name){var f=FLAGS[name],i;for(i=0;i<f.length;i++){if(f[i].e>RELEASE)return Math.max(f[i].s,RELEASE);}return RELEASE;}
+
+function stats(name,x){var p=DATA[name].pings,wk=0,last=null,past=[],i;
+ for(i=0;i<p.length;i++){if(p[i][0]<=x){past.push(p[i]);if(p[i][0]>x-168)wk++;if(p[i][1]==="T")last=p[i][0];}}
+ var pre=0;for(i=0;i<p.length;i++){if(p[i][0]<RELEASE)pre++;}
+ var usual=Math.round(pre/(RELEASE/168));
+ var words={T:"yes",D:"no",M:"missed"};
+ var l3=past.slice(-3).map(function(q){return words[q[1]];}).join(", ")||"none yet";
+ return {week:wk,usual:usual,lastAcc:last===null?"none yet":dstr(last),l3:l3};}
+
+function rules(){return {miss:+$("s-miss").value,ref:+$("s-ref").value,drift:+$("s-drift").value,floor:+$("s-floor").value,prio:$("c-prio").checked};}
+function applyPreset(k){var r=PRESET[k];preset=k;$("s-miss").value=r.miss;$("s-ref").value=r.ref;$("s-drift").value=r.drift;$("s-floor").value=r.floor;$("c-prio").checked=r.prio;renderAll();}
+
+var X0=44,X1=664,Y0=24,Y1=214;
+function px(h){return X0+h/TOTAL*(X1-X0);}
+function py(s){return Y1-s*(Y1-Y0);}
+function pathFor(sm){var evs=sm.evs,r=sm.r,d="M"+px(0).toFixed(1)+" "+py(evs[0].after).toFixed(1),i;
+ function seg(h0,s0,h1){var o="";if(r.drift>0&&s0!==0.5){var tc=h0+Math.abs(s0-0.5)/r.drift*24;if(tc<h1&&tc>h0)o+=" L"+px(tc).toFixed(1)+" "+py(Math.max(r.floor,0.5)).toFixed(1);}return o;}
+ for(i=1;i<evs.length;i++){var pv=evs[i-1];d+=seg(pv.h,pv.after,evs[i].h)+" L"+px(evs[i].h).toFixed(1)+" "+py(evs[i].before).toFixed(1)+" L"+px(evs[i].h).toFixed(1)+" "+py(evs[i].after).toFixed(1);}
+ var l=evs[evs.length-1];d+=seg(l.h,l.after,TOTAL)+" L"+px(TOTAL).toFixed(1)+" "+py(sm.at(TOTAL)).toFixed(1);return d;}
+
+function renderChart(){
+ var hero=DATA[cur],a=sim(hero.pings,TODAY),b=sim(hero.pings,rules()),g="",i,v;
+ for(i=0;i<=4;i++){v=i/4;g+='<line x1="'+X0+'" x2="'+X1+'" y1="'+py(v)+'" y2="'+py(v)+'" stroke="currentColor" stroke-opacity=".18"/><text x="'+(X0-6)+'" y="'+(py(v)+4)+'" text-anchor="end" font-size="11" fill="currentColor">'+v.toFixed(2)+'</text>';}
+ [["29 Jun",0],["13 Jul",14],["27 Jul",28],["10 Aug",42],["24 Aug",56],["7 Sep",70]].forEach(function(l){var x=px(l[1]*24);g+='<line x1="'+x+'" x2="'+x+'" y1="'+Y1+'" y2="'+(Y1+4)+'" stroke="currentColor"/><text x="'+x+'" y="'+(Y1+16)+'" text-anchor="middle" font-size="11" fill="currentColor">'+l[0]+'</text>';});
+ FLAGS[cur].forEach(function(f){var w=Math.max(2,px(f.e)-px(f.s));g+='<rect x="'+px(f.s).toFixed(1)+'" y="'+(Y0-4)+'" width="'+w.toFixed(1)+'" height="'+(Y1-Y0+8)+'" fill="#FF7A00" fill-opacity=".22" stroke="#FF7A00" stroke-opacity=".6"/>';});
+ g+='<line x1="'+px(RELEASE)+'" x2="'+px(RELEASE)+'" y1="'+(Y0-10)+'" y2="'+(Y1+4)+'" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/><text x="'+(px(RELEASE)-5)+'" y="'+(Y0-12)+'" text-anchor="end" font-size="12" font-weight="700" fill="currentColor">4.2 ships 12 Aug</text>';
+ g+='<path d="'+pathFor(a)+'" fill="none" stroke="#FF7A00" stroke-width="3.5" stroke-linejoin="round"/>';
+ g+='<path d="'+pathFor(b)+'" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="9 5" stroke-linejoin="round"/>';
+ var rows=[["T","Yes",238,"#0B8A44"],["D","No",254,"#C77700"],["M","Missed",270,"#C4161C"]];
+ rows.forEach(function(rw){g+='<text x="'+(X0-6)+'" y="'+(rw[2]+10)+'" text-anchor="end" font-size="11" fill="currentColor">'+rw[1]+'</text>';hero.pings.forEach(function(p){if(p[1]===rw[0])g+='<rect x="'+(px(p[0])-0.75).toFixed(1)+'" y="'+rw[2]+'" width="1.5" height="12" fill="'+rw[3]+'"/>';});});
+ g+='<line x1="'+px(t)+'" x2="'+px(t)+'" y1="'+(Y0-6)+'" y2="288" stroke="#B3121A" stroke-width="2.5"/><text x="'+Math.min(px(t)+5,X1-70)+'" y="304" font-size="12" font-weight="700" fill="currentColor">'+dstr(t)+'</text>';
+ var svg=$("chart");svg.style.color=getComputedStyle(document.body).color;svg.innerHTML=g;
+ $("legend").innerHTML='<span><i style="border-color:#FF7A00"></i>Today\'s rules</span><span><i style="border-color:currentColor;border-top-style:dashed"></i>The rule you picked</span><span><b class="sw"></b>Flagged quiet</span><span>Red line: the date you picked</span>';
+ var ps=hero.pings.filter(function(p){return p[0]>=RELEASE;});
+ $("chartnote").innerHTML='<b>'+cur+'</b> ('+hero.home+'): '+hero.pings.length+' real offers. After 12 Aug: '+ps.length+' offers, '+ps.filter(function(p){return p[1]==="T";}).length+' accepted, '+ps.filter(function(p){return p[1]==="M";}).length+' missed. <span class="tag obs">Real</span> Points are <span class="tag est">Estimate</span>';
+ return {a:a,b:b};}
+
+function renderRank(b){
+ var hs=b.at(t),fl=flagAtT(cur,t),r=rules();
+ var heroR=0.6*(1-10/45)+0.25*hs+0.15,nbR=0.6*(1-25/45)+0.25*0.96+0.15;
+ var prio=r.prio&&fl;
+ var first=prio||heroR>=nbR;
+ $("rank").innerHTML='<b>Would '+cur+' still rank first at home on '+dstr(t)+'?</b> <span class="tag est">Estimate</span><br>Example: '+cur+' is 10 minutes from the job, a neighbour with 0.96 points is 25 minutes away. '+cur+"'s points on this date: <b>"+hs.toFixed(2)+'</b>. Ranking score: '+cur+' <b>'+heroR.toFixed(2)+'</b>, neighbour <b>'+nbR.toFixed(2)+'</b>.<br>'+(prio?'<b>Yes. The quiet hero gets the next job in their own area first (rule on).</b>':(first?'<b>Yes, '+cur+' ranks first.</b>':'<b>No, the neighbour ranks first.</b>'));}
+
+function cardHTML(name,x,isHero){
+ var s=stats(name,x),fl=flagAtT(name,x),info=INFO[cur],sm=sim(DATA[name].pings,rules());
+ var isAway=isHero&&away[name]!==undefined&&x<away[name];
+ var h='<div class="card"><h3>'+name+' <small class="small">('+DATA[name].home+')</small></h3>';
+ h+=fl&&!isAway?'<span class="badge q">Quiet</span>':(isAway?'<span class="badge ok">Away</span>':'<span class="badge ok">OK</span>');
+ h+='<dl class="stat"><dt>Offers this week</dt><dd>'+s.week+' (usual: about '+s.usual+')</dd><dt>Last accepted</dt><dd>'+s.lastAcc+'</dd><dt>Last 3 offers</dt><dd>'+s.l3+'</dd><dt>Points (replay)</dt><dd>'+sm.at(x).toFixed(2)+'</dd></dl>';
+ if(fl&&!isAway){
+   if(isHero){h+='<div class="alert"><b>'+name+' has gone quiet.</b><br>Why: '+fl.reason+'.<div class="acts"><button data-act="phone">Check phone</button><button data-act="away">Mark away</button><button data-act="prod">Tell Product</button></div>'+(checkOpen?checkHTML(name):'')+'</div>';}
+   else{h+='<div class="alert"><b>'+name+' has gone quiet.</b> Why: '+fl.reason+'.</div>';}
+ } else if(isAway){
+   h+='<div class="alert" style="border-color:var(--line);background:var(--panel)"><b>Away until '+dstr(away[name])+'.</b> The flag is paused.<div class="acts"><button data-act="undo">Undo</button></div></div>';
+ } else {h+='<p class="small">No flag on this date.</p>';}
+ return h+'</div>';}
+function checkHTML(name){
+ var del=checkMode==="delivered";
+ return '<div class="note" style="margin-top:8px"><span class="tag smp">Sample</span> We can\'t see delivery yet, so this is an example report.<div class="row"><button data-act="cdel" aria-pressed="'+del+'">Offers delivered</button><button data-act="cnot" aria-pressed="'+!del+'">Offers not delivered</button></div>'+(del?'The last 3 offers reached '+name+'\'s phone. <b>Advice:</b> ask '+name+' to check the app and notifications.':'The last 3 offers did not reach '+name+'\'s phone. <b>Advice:</b> tell Engineering. <div class="acts" style="margin-top:6px"><button data-act="eng">Tell Engineering</button></div>')+'</div>';}
+
+function renderCards(){
+ var info=INFO[cur],box=$("cards");box.innerHTML="";
+ $("kipsub").innerHTML=(info.handler==="Kip"?'Kip looks after Meteor Mite and The Gale. Two cards side by side, two different stories.':info.handler+' looks after '+cur+'.')+' <span class="tag obs">Real</span> numbers for the date you picked.';
+ var c1=el("div");c1.innerHTML=cardHTML(cur,t,true);box.appendChild(c1.firstChild);
+ if(info.sibling){var c2=el("div");c2.innerHTML=cardHTML(info.sibling,t,false);box.appendChild(c2.firstChild);}
+ var m=notices.filter(function(n){return n.hero===cur;});
+ $("msgs").innerHTML=m.length?'<h3 style="margin-top:12px">Messages for '+info.handler+'</h3><ul>'+m.map(function(n){return '<li>'+dstr(n.t)+': '+n.text+'</li>';}).join("")+'</ul>':'';
+ Array.prototype.forEach.call(box.querySelectorAll("button[data-act]"),function(b){b.onclick=function(){act(b.getAttribute("data-act"));};});}
+
+function act(a){var s=stats(cur,t),fl=flagAtT(cur,t),h=INFO[cur].handler;
+ if(a==="phone"){checkOpen=!checkOpen;}
+ else if(a==="cdel"){checkMode="delivered";}
+ else if(a==="cnot"){checkMode="notDelivered";}
+ else if(a==="away"){away[cur]=t+168;checkOpen=false;}
+ else if(a==="undo"){delete away[cur];}
+ else if(a==="prod"){inP.push(dstr(t)+': '+cur+' flagged quiet ('+(fl?fl.reason:'')+'). Offers this week '+s.week+' (usual '+s.usual+'). Last accepted '+s.lastAcc+'. Sent by '+h+'.');}
+ else if(a==="eng"){inE.push(dstr(t)+': offers are not reaching '+cur+'\'s phone (sample report). Sent by '+h+'.');}
+ renderCards();renderInboxes();}
+
+function renderPhone(){
+ var fl=flagAtT(cur,t),box=$("phonebox"),home=DATA[cur].home;
+ if(!fl){box.innerHTML='<p class="small">No text on this date, because '+cur+' is not flagged quiet.</p>';return;}
+ box.innerHTML='<div class="phone"><div class="small" style="text-align:center">Text message, '+dstr(t)+'</div><div class="bubble">You haven\'t had an offer in '+home+' for a few days. It isn\'t about anything you did. You\'re still in rotation, and we\'re fixing how offers reach you. If your phone has been quiet, tell your handler.</div><div class="acts"><button data-r="here">I\'m here</button><button data-r="quiet">My phone has been quiet</button></div></div>';
+ Array.prototype.forEach.call(box.querySelectorAll("button[data-r]"),function(b){b.onclick=function(){
+   var k=b.getAttribute("data-r"),h=INFO[cur].handler;
+   if(k==="here"){notices.push({hero:cur,t:t,text:cur+' says: I\'m here. No problem on their side.'});}
+   else{notices.push({hero:cur,t:t,text:cur+' says: my phone has been quiet. Flagged to you and Engineering.'});inE.push(dstr(t)+': '+cur+' says their phone has been quiet. Sent through the text reply.');}
+   renderCards();renderInboxes();};});}
+
+function renderInboxes(){$("inP").innerHTML=inP.length?inP.map(function(x){return '<li>'+x+'</li>';}).join(""):'<li class="small">Nothing yet.</li>';$("inE").innerHTML=inE.length?inE.map(function(x){return '<li>'+x+'</li>';}).join(""):'<li class="small">Nothing yet.</li>';}
+
+function renderChips(){var box=$("chips");box.innerHTML="";var f=FLAGS[cur],pre=0;
+ f.forEach(function(x){var b=el("button","",dstr(x.s)+': '+(x.reason.indexOf('3 days')>-1?'no offers for 3 days':'last 3 missed')+(x.s<RELEASE?' (before 4.2)':''));if(x.s<RELEASE)pre++;b.onclick=function(){t=Math.ceil(x.s/6)*6;$("s-date").value=t;renderAll();};box.appendChild(b);});
+ $("flagnote").innerHTML=f.length+' flag'+(f.length===1?'':'s')+' for '+cur+', '+pre+' before 4.2. <span class="tag obs">Real</span>';}
+
+function renderAll(){
+ ["miss","ref","drift","floor"].forEach(function(k){var v=+$("s-"+k).value;$("o-"+k).textContent=k==="drift"?v.toFixed(3)+" a day":v.toFixed(2);});
+ Array.prototype.forEach.call($("presets").children,function(b){b.setAttribute("aria-pressed",b.getAttribute("data-p")===preset?"true":"false");});
+ Array.prototype.forEach.call($("heroes").children,function(b){b.setAttribute("aria-pressed",b.getAttribute("data-h")===cur?"true":"false");});
+ $("datelab").textContent=tstr(t);
+ var sm=renderChart();renderRank(sm.b);renderCards();renderPhone();renderInboxes();renderChips();}
+
+(function(){
+ ORDER.forEach(function(n){var b=el("button","",n);b.setAttribute("data-h",n);b.onclick=function(){cur=n;checkOpen=false;t=firstFlagAfter(n);t=Math.ceil(t/6)*6;$("s-date").value=t;renderAll();};$("heroes").appendChild(b);});
+ Array.prototype.forEach.call($("presets").children,function(b){b.onclick=function(){applyPreset(b.getAttribute("data-p"));};});
+ ["s-miss","s-ref","s-drift","s-floor"].forEach(function(id){$(id).addEventListener("input",function(){preset="";renderAll();});});
+ $("c-prio").addEventListener("change",function(){preset="";renderAll();});
+ $("s-date").addEventListener("input",function(){t=+$("s-date").value;renderAll();});
+ $("jump").onclick=function(){t=Math.ceil(firstFlagAfter(cur)/6)*6;$("s-date").value=t;renderAll();};
+ $("clearP").onclick=function(){inP=[];renderInboxes();};$("clearE").onclick=function(){inE=[];renderInboxes();};
+ t=Math.ceil(firstFlagAfter(cur)/6)*6;$("s-date").value=t;
+ renderAll();
+})();
+
+var SCEN={
+ well:{t1:{longest:[5,4,3,2],nobody:[8,8,7,6]},t2:{m90:[10,8,7,6],m60:[15,14,14,13],n90:[6,6,5,5],n60:[6,6,6,6]}},
+ stop:{t1:{longest:[5,6,8,9],nobody:[10,13,14,15]},t2:{m90:[10,9,9,8],m60:[15,14,15,14],n90:[6,7,8,9],n60:[6,6,6,6]}}
+};
+SCEN.mixed={t1:SCEN.well.t1,t2:SCEN.stop.t2};
+var scen="well";
+function bars(vals,max,line,lineLabel,color){var w=300,h=90,bw=40,g="",i;
+ vals.forEach(function(v,i){var bh=v/max*(h-22),x=20+i*72;g+='<rect x="'+x+'" y="'+(h-14-bh)+'" width="'+bw+'" height="'+bh+'" fill="'+color+'" stroke="currentColor" stroke-width="2"/><text x="'+(x+bw/2)+'" y="'+(h-17-bh)+'" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">'+v+'</text><text x="'+(x+bw/2)+'" y="'+(h-2)+'" text-anchor="middle" font-size="10" fill="currentColor">Wk '+(i+1)+'</text>';});
+ if(line!==null){var ly=h-14-line/max*(h-22);g+='<line x1="6" x2="'+(w-6)+'" y1="'+ly+'" y2="'+ly+'" stroke="#B3121A" stroke-width="2.5" stroke-dasharray="6 4"/><text x="'+(w-8)+'" y="'+(ly-3)+'" text-anchor="end" font-size="10" font-weight="700" fill="currentColor">'+lineLabel+'</text>';}
+ return '<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Bar chart of four sample weeks" style="color:inherit">'+g+'</svg>';}
+function risingTwice(a){var i;for(i=2;i<a.length;i++){if(a[i]>a[i-1]&&a[i-1]>a[i-2])return i+1;}return 0;}
+function renderTests(){
+ var d=SCEN[scen],box=$("tests");box.innerHTML="";
+ Array.prototype.forEach.call($("scen").children,function(b){b.setAttribute("aria-pressed",b.getAttribute("data-s")===scen?"true":"false");});
+ var t1=d.t1,stopWk=0,i;for(i=0;i<4;i++){if(t1.nobody[i]>12){stopWk=i+1;break;}}
+ var pass1=Math.max.apply(null,t1.longest)<7;
+ var s1=stopWk?{c:"stop",t:"STOP in week "+stopWk,m:"Jobs nobody took went above 12% in the test areas. Pause Test 1 and look."}:(pass1?{c:"go",t:"ON TRACK",m:"No hero reached day 7 without an offer, and jobs nobody took stayed under 12%."}:{c:"mid",t:"NEEDS A LOOK",m:"A hero reached day 7 without an offer."});
+ var c1=el("div","card");c1.innerHTML='<h3>Test 1: banner, text, option C</h3><p class="small">Uptown, Old Town, Harborside. <span class="tag smp">Sample</span></p><span class="status '+s1.c+'">'+s1.t+'</span><p style="margin-top:8px">'+s1.m+'</p><div class="mini"><b>Longest a hero went without an offer (days)</b>'+bars(t1.longest,10,7,"Pass: under 7","#FFD60A")+'</div><div class="mini"><b>Jobs nobody took (%)</b>'+bars(t1.nobody,20,12,"Stop: 12%","#FF7A00")+'</div>';
+ box.appendChild(c1);
+ var t2=d.t2,rise=risingTwice(t2.n90),better=t2.m90[3]<t2.m60[3],noRise=t2.n90[3]<=t2.n90[0];
+ var s2=rise?{c:"stop",t:"STOP in week "+rise,m:"Jobs nobody took rose two weeks running in the 90-second areas. Switch them back and look."}:(better&&noRise?{c:"go",t:"ON TRACK",m:"Fewer missed offers in the 90-second areas, and jobs nobody took did not rise."}:{c:"mid",t:"NEEDS A LOOK",m:"Not clearly better yet."});
+ var c2=el("div","card");c2.innerHTML='<h3>Test 2: wait 90 seconds against 60</h3><p class="small">Two non-quiet areas each, picked by Marcus. <span class="tag smp">Sample</span></p><span class="status '+s2.c+'">'+s2.t+'</span><p style="margin-top:8px">'+s2.m+'</p><div class="mini"><b>Missed offers (%), 90-second areas</b>'+bars(t2.m90,20,null,"","#FFD60A")+'</div><div class="mini"><b>Missed offers (%), 60-second areas</b>'+bars(t2.m60,20,null,"","#FF7A00")+'</div><div class="mini"><b>Jobs nobody took (%), 90-second areas</b>'+bars(t2.n90,20,null,"","#FFD60A")+'</div>';
+ box.appendChild(c2);}
+(function(){Array.prototype.forEach.call($("scen").children,function(b){b.onclick=function(){scen=b.getAttribute("data-s");renderTests();};});renderTests();})();
+
+(function(){var root=document.documentElement,btn=$("theme");
+ try{var th=localStorage.getItem("quiet-proto-theme");if(th==="dark"||th==="light")root.setAttribute("data-theme",th);}catch(e){}
+ btn.onclick=function(){var c=root.getAttribute("data-theme")||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),n=c==="dark"?"light":"dark";root.setAttribute("data-theme",n);try{localStorage.setItem("quiet-proto-theme",n);}catch(e){}renderAll();};})();
+})();
+</script>
