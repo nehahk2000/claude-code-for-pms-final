@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Release 4.2 Final Report</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+<style>
+:root{--page:#1E50C8;--dots:rgba(255,255,255,.2);--panel:#FFFFFF;--ink:#0B1F4B;--ink2:#2B3A66;--line:#0B1F4B;--shadow:#0B1F4B;--yellow:#FFD60A;--orange:#FF7A00;--good:#0B6B35;--goodbg:#D9F5E3;--bad:#B3121A;--badbg:#FFE1DE;--warn:#8A4B00;--warnbg:#FFF0C2;--chip:#EAF0FF;--blue:#378ADD;--phone:#F3F5FB;--onpage:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0A1740;--dots:rgba(255,255,255,.08);--panel:#16224D;--ink:#F5F7FF;--ink2:#C9D3F5;--line:#02081F;--shadow:#02081F;--good:#7FE3A5;--goodbg:#0F3B27;--bad:#FF9C95;--badbg:#4A1518;--warn:#FFD27A;--warnbg:#4A3507;--chip:#22316B;--phone:#101A3E;color-scheme:dark}}
+:root[data-theme="dark"]{--page:#0A1740;--dots:rgba(255,255,255,.08);--panel:#16224D;--ink:#F5F7FF;--ink2:#C9D3F5;--line:#02081F;--shadow:#02081F;--good:#7FE3A5;--goodbg:#0F3B27;--bad:#FF9C95;--badbg:#4A1518;--warn:#FFD27A;--warnbg:#4A3507;--chip:#22316B;--phone:#101A3E;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-snap-type:y proximity;scroll-behavior:smooth}
+body{margin:0;background-color:var(--page);background-image:radial-gradient(var(--dots) 1.6px,transparent 1.8px);background-size:14px 14px;color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3,.disp{font-family:"Bangers","Impact","Arial Black",sans-serif;font-weight:400;letter-spacing:.04em}
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:10px;padding:6px 14px;background:var(--panel);border-bottom:4px solid var(--line)}
+.bar .name{font-family:"Bangers","Impact",sans-serif;letter-spacing:.06em;font-size:18px;white-space:nowrap}
+.bar .prog{flex:1;height:10px;border:2px solid var(--line);background:var(--chip);min-width:40px}
+.bar .prog i{display:block;height:100%;width:0;background:var(--orange);transition:width .3s}
+.bar .num{font-weight:700;font-size:13px;white-space:nowrap}
+.bar button{white-space:nowrap;padding:2px 8px;font-size:13px;box-shadow:2px 2px 0 var(--shadow)}
+.nav button{padding:2px 9px;font-size:14px}
+button{font:inherit;cursor:pointer;color:var(--ink);background:var(--chip);border:3px solid var(--line);padding:4px 10px;box-shadow:3px 3px 0 var(--shadow);font-weight:700}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+button[aria-pressed="true"]{background:var(--yellow);color:#0B1F4B}
+:focus-visible{outline:4px solid var(--orange);outline-offset:2px}
+.slide{min-height:100vh;scroll-snap-align:start;padding:72px 16px 72px;display:flex;flex-direction:column;justify-content:center;max-width:1000px;margin:0 auto}
+.panel{background:var(--panel);border:4px solid var(--line);box-shadow:7px 7px 0 var(--shadow);padding:18px 20px;min-width:0}
+.kick{display:inline-block;align-self:flex-start;background:var(--orange);color:#0B1F4B;border:3px solid var(--line);font-family:"Bangers","Impact",sans-serif;letter-spacing:.06em;padding:2px 12px;margin-bottom:10px;font-size:18px}
+h1{font-size:clamp(40px,9vw,78px);line-height:1;margin:0 0 10px;color:var(--yellow);text-shadow:4px 4px 0 var(--line)}
+h2{font-size:clamp(24px,4.6vw,36px);line-height:1.05;margin:0 0 8px}
+h3{font-size:22px;margin:0 0 4px}
+p{margin:0 0 10px}
+.lead{font-size:clamp(18px,3vw,23px);font-weight:600}
+.onpage{color:var(--onpage)}
+.sub{color:var(--ink2);font-size:15px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));align-items:start}
+.num-card{border:4px solid var(--line);background:var(--yellow);color:#0B1F4B;padding:12px;text-align:center;box-shadow:5px 5px 0 var(--shadow);transform:rotate(-1.2deg)}
+.num-card:nth-child(even){background:var(--orange);transform:rotate(1.2deg)}
+.num-card .big{font-family:"Bangers","Impact",sans-serif;font-size:clamp(30px,6vw,44px);line-height:1;letter-spacing:.03em}
+.num-card .lab{font-size:14px;font-weight:700;margin-top:4px;line-height:1.25}
+.prompt{border:3px solid var(--line);background:var(--chip);padding:10px 12px;margin:8px 0}
+.prompt .who{font-family:"Bangers","Impact",sans-serif;letter-spacing:.05em;font-size:15px;color:var(--ink2);display:block;margin-bottom:4px}
+.prompt q{display:block;quotes:none;white-space:pre-wrap;font-size:15px;font-weight:600}
+.prompt q::before{content:"\201C"}.prompt q::after{content:"\201D"}
+.prompt.nosave{border-style:dashed}
+.src{font-size:13px;color:var(--ink2);margin-top:8px}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;padding:1px 7px;border:2px solid var(--line);vertical-align:middle;text-transform:uppercase;margin-right:4px}
+.tag.obs{background:var(--goodbg);color:var(--good)}.tag.est{background:var(--warnbg);color:var(--warn)}.tag.smp{background:var(--badbg);color:var(--bad)}
+.chart{border:3px solid var(--line);background:var(--panel);padding:8px;color:var(--ink)}
+.chart svg{display:block;width:100%;height:auto}
+.chart .bar-g{transform-origin:bottom;transform-box:fill-box;transform:scaleY(0);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.in .chart .bar-g{transform:scaleY(1)}
+.dot-fade{opacity:0;transition:opacity .8s .3s}.in .dot-fade{opacity:1}
+.mods{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.mod{border:3px solid var(--line);background:var(--chip);padding:10px 12px;box-shadow:4px 4px 0 var(--shadow)}
+.mod b{font-family:"Bangers","Impact",sans-serif;letter-spacing:.05em;font-size:19px}
+.mod .t{font-size:14px}
+.mod .st{display:inline-block;margin-top:6px;font-size:12px;font-weight:800;padding:0 7px;border:2px solid var(--line)}
+.st.ok{background:var(--goodbg);color:var(--good)}.st.no{background:var(--warnbg);color:var(--warn)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)}
+th{color:var(--ink2);font-weight:700}
+.scroll{overflow-x:auto}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+input[type=range]{width:100%;accent-color:var(--orange)}
+.card{border:3px solid var(--line);background:var(--chip);padding:10px 12px;box-shadow:3px 3px 0 var(--shadow)}
+.alert{border:3px solid var(--bad);background:var(--badbg);padding:8px 10px;margin-top:8px}
+.badge{display:inline-block;font-weight:800;font-size:12px;padding:0 8px;border:2px solid var(--line);text-transform:uppercase}
+.badge.q{background:var(--badbg);color:var(--bad)}.badge.ok{background:var(--goodbg);color:var(--good)}
+.stat{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;font-size:14px;margin:6px 0}
+.stat dt{color:var(--ink2)}.stat dd{margin:0;font-weight:700}
+.phone{max-width:280px;margin:8px auto 0;border:5px solid var(--line);border-radius:24px;background:var(--phone);padding:14px 12px;box-shadow:5px 5px 0 var(--shadow)}
+.bubble{background:var(--panel);border:3px solid var(--line);border-radius:14px;padding:9px 11px;font-size:14px}
+.skills{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.skill{border:3px solid var(--line);background:var(--chip);padding:10px 12px;box-shadow:4px 4px 0 var(--shadow)}
+.skill b{font-family:"Bangers","Impact",sans-serif;letter-spacing:.05em;font-size:20px}
+.skill .r{font-size:14px;margin-top:6px}
+.nav{position:fixed;right:12px;bottom:12px;z-index:20;display:flex;gap:8px}
+.dots{position:fixed;left:6px;top:50%;transform:translateY(-50%);z-index:15;display:flex;flex-direction:column;gap:7px}
+.dots a{width:11px;height:11px;border:2px solid var(--line);background:var(--panel);display:block}
+.dots a.on{background:var(--orange)}
+#ch-flow,#ch-daily,#ch-heroes,#ch-tickets,#ch-farlight{overflow-x:auto}
+#ch-flow svg{min-width:640px}#ch-daily svg{min-width:560px}#ch-heroes svg{min-width:400px}#ch-tickets svg{min-width:460px}#ch-farlight svg{min-width:440px}
+@media (max-width:760px){.dots{display:none}.bar .name{font-size:15px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chart .bar-g{transition:none;transform:none}.dot-fade{opacity:1;transition:none}}
+.foot{color:var(--onpage);font-size:13px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="bar" role="banner"><span class="name">RELEASE 4.2 REPORT</span><div class="prog"><i id="prog"></i></div><span class="num" id="num">1 / 1</span><button id="theme" aria-label="Switch between light and dark version">Light / dark</button></div>
+<nav class="dots" id="dots" aria-label="Slides"></nav>
+<div class="nav"><button id="prev" aria-label="Previous slide">&#9664;</button><button id="next" aria-label="Next slide">&#9654;</button></div>
+<main id="deck">
+
+<section class="slide" data-title="Title">
+  <span class="kick">FINAL REPORT</span>
+  <h1>What Release 4.2 did to the heroes, and how we stop it happening again</h1>
+  <p class="lead onpage">Rook Dispatch &middot; 29 Jun to 6 Sep 2026 &middot; a fictional teaching scenario</p>
+  <p class="onpage">Use the arrow keys, the buttons at the bottom right, or just scroll. Every number comes from the Rook database, the wiki, the code, or your own files, and is marked <span class="tag obs">Real</span> or <span class="tag est">Estimate</span>.</p>
+</section>
+
+<section class="slide" data-title="What happened">
+  <span class="kick">IN 20 SECONDS</span>
+  <div class="panel">
+    <h2>On 12 August the time to answer an offer was cut from 90 seconds to 60. Then heroes started missing offers, and some stopped getting any.</h2>
+    <div class="grid" id="bignums">
+      <div class="num-card"><div class="big"><span data-to="2.3" data-dec="1">0</span>% &rarr; <span data-to="18.0" data-dec="1">0</span>%</div><div class="lab">of offers went unanswered</div></div>
+      <div class="num-card"><div class="big"><span data-to="5.5" data-dec="1">0</span>% &rarr; <span data-to="11.1" data-dec="1">0</span>%</div><div class="lab">of jobs nobody took</div></div>
+      <div class="num-card"><div class="big"><span data-to="12" data-dec="0">0</span> &rarr; <span data-to="0" data-dec="0">0</span></div><div class="lab">offers a week to Farlight (week of 31 Aug)</div></div>
+      <div class="num-card"><div class="big"><span data-to="0" data-dec="0">0</span> &rarr; <span data-to="86" data-dec="0">0</span></div><div class="lab">jobs taken by a hero away from their home area</div></div>
+    </div>
+    <p class="src"><span class="tag obs">Real</span>Rook database. Before is 29 Jun to 11 Aug, after is 12 Aug to 6 Sep. Verified with the verify-numbers skill.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="How I got here">
+  <span class="kick">SIX MODULES</span>
+  <h2 class="onpage">One finding and the prompt that produced it, for each module</h2>
+  <div class="mods" id="mods"></div>
+  <p class="foot">Honest note: the prompt files for Modules 2, 3, 4 and 6 are empty. All your saved prompts went into Module 1 (52) and Module 5 (17). I matched each module's theme to the saved prompt that produced its finding, and I say where each one is filed. Module 6's prompt comes from the conversation because it was never saved.</p>
+</section>
+
+<section class="slide" data-title="Module 1">
+  <span class="kick">MODULE 1 &middot; ORIGIN STORY</span>
+  <div class="panel">
+    <h2>Day one: build a picture of the company</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; 01-origin-story/prompts.md, #2</span><q>I just joined Rook Industries as PM for Rook Dispatch. Read everything in 00-rook/company/ and add to the CLAUDE.md at the root of this folder, what you'd need to know to help me do my job here: the products, the people, the vocabulary, where things stand. Leave the session scope block at the top. Keep it under two pages</q></div>
+    <h3>What it produced: the context file (CLAUDE.md)</h3>
+    <div class="grid">
+      <div class="card"><b>Two things shipped together</b><br>4.2 changed who gets offers first (closeness up, yes-rate down) and cut the answer time from 90 to 60 seconds.</div>
+      <div class="card"><b>A theory nobody had tested</b><br>The previous PM thought it was mostly the August slump and would pass in September.</div>
+      <div class="card"><b>A gap</b><br>No one had ever written down how offers get decided. The previous PM asked for it.</div>
+    </div>
+    <p class="src">Source: the handoff note in 00-rook/company/notes and CLAUDE.md, Working context.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Module 2">
+  <span class="kick">MODULE 2 &middot; SUPER HEARING</span>
+  <div class="panel">
+    <h2>The tickets and the interviews tell two stories</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; filed in 01-origin-story/prompts.md, #26</span><q>pull all the tickets and see if it matches the narrative and the data</q></div>
+    <div class="grid2">
+      <div><div class="chart" id="ch-tickets"></div><p class="src"><span class="tag obs">Real</span>Support tickets a week. The line at 12 Aug is the release.</p></div>
+      <div>
+        <p class="lead">45 tickets about missed or quiet heroes. Every one is still open.</p>
+        <div class="card"><b>Two themes, as the support lead said</b><br>15 say "the offer was gone before I could answer". 30 say "my phone never goes off" (two thirds).</div>
+        <div class="card" style="margin-top:10px"><b>Where the piles disagree</b><br>The tickets are about Farlight, The Undertow, Corporal Ashgrove and Halfmoon. The interviews point at Vesper and Meteor Mite, whose handlers filed no tickets at all.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Module 3">
+  <span class="kick">MODULE 3 &middot; REWIND</span>
+  <div class="panel">
+    <h2>Rewind to 12 August: it was a step, not a slide</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; filed in 01-origin-story/prompts.md, #6</span><q>give me pre and post 4.2 timelines</q></div>
+    <p class="sub">What your prompt showed: accepted offers held at about 77% a week, then fell to 47% in the first five days after the release. The daily view below comes from a later check.</p><div class="chart" id="ch-daily"></div>
+    <p class="src"><span class="tag obs">Real</span>Share of offers missed each day, 14 days either side of the release. Missed offers were 0 to 5% a day before, then <b>28%</b> on 12 Aug and <b>48%</b> on 13 Aug. Time of day does not explain it: every time-of-day band rose.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Module 4">
+  <span class="kick">MODULE 4 &middot; X-RAY VISION</span>
+  <div class="panel">
+    <h2>The average hid four heroes</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; filed in 01-origin-story/prompts.md, #22</span><q>ok use  the data that is there in pings. Every row is one responder in one week: how many times we pinged them, and how many of those they took. Release 4.2 shipped on 12 August. Tell me what changed after that date. Show me the weekly numbers before and after, and show me the rows you used to get them.</q></div>
+    <div class="grid2">
+      <div><div class="chart" id="ch-heroes"></div><p class="src"><span class="tag obs">Real</span>Offers a week to each hero, before (hollow) and after (filled). Total offers stayed flat at about 170 a week, so the average looked fine.</p></div>
+      <div>
+        <p class="lead">Four heroes went from about 12 offers a week to 3 or 4, and missed 59% of what they were sent.</p>
+        <div class="card"><b>Everyone else</b><br>Missed 14% of offers (up from 2%), and ten of the twelve got more offers a week, which fits them covering for the four.</div>
+        <div class="card" style="margin-top:10px"><b>If you had only asked for the number</b><br>You would have seen "acceptance fell from 76.6% to 64.0%" and missed who it happened to.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Farlight">
+  <span class="kick">ONE HERO, WEEK BY WEEK</span>
+  <div class="panel">
+    <h2>Farlight went quiet, and nobody told Farlight or us</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; filed in 01-origin-story/prompts.md, #25</span><q>Did anything change in the farlight database or data related to farlight ?</q></div>
+    <div class="grid2">
+      <div><div class="chart" id="ch-farlight"></div><p class="src"><span class="tag obs">Real</span>Offers to Farlight, by week. Orange is accepted. The 10 to 11 Aug and 12 to 16 Aug bars are partial weeks.</p></div>
+      <div>
+        <p>Last accepted offer: <b>14 Aug</b>. In the week of 31 Aug: <b>no offers</b>, though 15 callouts came in Uptown.</p>
+        <p>Farlight's handler filed 11 tickets about it. All are still open.</p>
+        <div class="card"><b>What Farlight said</b><br>"starting to wonder if im still even in the system."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Why it happened">
+  <span class="kick">THE RULE THAT DID IT</span>
+  <div class="panel">
+    <h2>A missed offer costs more than a yes earns, and points never come back</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; filed in 01-origin-story/prompts.md, #40</span><q>can we get more details for Farlight from  offer.py, availability.py , routing.py and history.py</q></div>
+    <div class="grid2">
+      <div><div class="chart" id="ch-rule"></div></div>
+      <div>
+        <p class="lead">A hero's points stay level only if they say yes 60% of the time.</p>
+        <p>The shorter wait made missed offers jump. Missed offers cost the same 0.12 as a refusal, so points fell. Heroes with low points were offered less, so they never got the chance to climb back. <span class="tag est">Estimate</span>Real points are not stored, so this is replayed from the real offers.</p>
+        <div class="card"><b>Replay of the four heroes</b><br>All four end at exactly 0.00 points. The other twelve end between 0.72 and 1.00.</div>
+        <div class="card" style="margin-top:10px"><b>No test was run</b><br>All 87 missed offers after 12 Aug moved on after about 62 seconds, none after 90. Every hero switched on the same day.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Where the work went">
+  <span class="kick">THE KNOCK-ON</span>
+  <div class="panel">
+    <h2>Neighbours picked up the work, and the quiet heroes lost it</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; filed in 01-origin-story/prompts.md, #33</span><q>and also who the pings was origniallt send to but who ended up taking it instead and the respective home bases as well to see which heros accepted pings in location outside their homebase</q></div>
+    <div class="chart" id="ch-flow"></div>
+    <p class="src"><span class="tag obs">Real</span>Before 4.2, no job was taken by a hero away from their home area. After, 86 were, all in the home areas of the three heroes who went quiet.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="The fix">
+  <span class="kick">MODULE 5 &middot; SUPER SPEED</span>
+  <div class="panel">
+    <h2>The fix: spot quiet heroes early, tell them, let points recover</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; 05-super-speed/prompts.md, #14</span><q>this brief is going to serve as input for working prototype with the fixes. Before we build , read the brief and ask me clarifying questions on what we need to build until you are 95% confident</q></div>
+    <p class="sub">The director asked for something a handler would notice and a quiet hero would feel, not a quiet number change. This is a small working copy of your prototype, using Meteor Mite's real offers. Drag the date and flip the rule.</p>
+    <div class="grid2">
+      <div>
+        <div class="ctl"><span><b>Rule:</b></span><button id="rA" aria-pressed="true">A. Leave it</button><button id="rC" aria-pressed="false">C. The fix</button></div>
+        <div class="chart" id="ch-proto"></div>
+        <label for="pdate" style="font-weight:700">Date: <span id="pdlab" class="disp" style="font-size:22px"></span></label>
+        <input type="range" id="pdate" min="0" max="1680" step="6" value="1110">
+        <div class="ctl"><button id="pjump">Jump to first flag after 4.2</button></div>
+        <p class="src">Orange line: today's rules. Dashed line: the rule you pick. Shaded: flagged quiet. <span class="tag est">Estimate</span>Points are replayed.</p>
+      </div>
+      <div>
+        <div class="card" id="pbanner" aria-live="polite"></div>
+        <div id="pphone"></div>
+        <p style="margin-top:10px"><a href="https://claude.ai/artifact/KeHH14rJ6fVk5QTk7kGoeB" style="color:var(--ink);font-weight:700">Open the full prototype</a> <span class="sub">(private until you share it from the Share menu)</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="The brief">
+  <span class="kick">THE ASK TO HELEN</span>
+  <div class="panel">
+    <h2>A one-page brief, tested by three simulated Helens</h2>
+    <div class="prompt"><span class="who">YOUR PROMPT &middot; 05-super-speed/prompts.md, #3</span><q>Let's write the brief before we build anything</q></div>
+    <div class="grid">
+      <div class="card"><b>Today</b><br>Agree the goal: no hero goes quiet unseen. Approve a replay on old data. Name owners.</div>
+      <div class="card"><b>Check first</b><br>Do offers reach phones? Do points reset on restart? Can we send a text?</div>
+      <div class="card"><b>Test 1</b><br>Banner, text and recovering points in Uptown, Old Town and Harborside. Pass: no hero reaches day 7 without an offer.</div>
+      <div class="card"><b>Test 2</b><br>Wait of 90 against 60 seconds, in other areas, so we can tell which one worked.</div>
+    </div>
+    <p class="src">Three rounds with Opus, Sonnet and Haiku ended at "sign with small edits". Dates and thresholds in the brief are proposals.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Module 6">
+  <span class="kick">MODULE 6 &middot; SIDEKICKS</span>
+  <div class="panel">
+    <h2>Four skills that watch for this, so it is not a surprise next time</h2>
+    <div class="prompt nosave"><span class="who">YOUR PROMPT &middot; from the conversation (06-sidekicks/prompts.md is empty)</span><q>Make a skill called review-checklist. When I point it at a brief, it checks that the brief: names who owns it, says how we'll know it worked, keeps the same scope start to finish, and explains the problem before the fix.</q></div>
+    <div class="skills" id="skills"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="The loop">
+  <span class="kick">KEEPING IT FROM HAPPENING AGAIN</span>
+  <div class="panel">
+    <h2>Every release goes round this loop</h2>
+    <div class="chart" id="ch-loop"></div>
+    <p class="src">The review-checklist skill is scheduled to run every Monday morning (about 8:11) on the briefs in this folder and the wiki. The other three are one command away.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="What we are asking">
+  <span class="kick">NEXT STEPS</span>
+  <div class="panel">
+    <h2>What we need, and what we still don't know</h2>
+    <div class="grid2">
+      <div>
+        <h3>Decisions for Helen</h3>
+        <table><tbody>
+          <tr><td><b>Today</b></td><td>Agree the goal. Approve the replay (no live change). Name owners for it and for ticket replies.</td></tr>
+          <tr><td><b>After the replay</b></td><td>Approve the two live tests. Set targets and a date.</td></tr>
+        </tbody></table>
+        <h3 style="margin-top:12px">Right now</h3>
+        <p>Answer the 45 open tickets, starting with Farlight's and The Undertow's handlers.</p>
+      </div>
+      <div>
+        <h3>Still unknown</h3>
+        <ul>
+          <li>Did the 4.2 release restart the service? Do points survive a restart?</li>
+          <li>Do offers reach quiet heroes' phones?</li>
+          <li>Why do jobs stop after one offer (82% of unfilled jobs)?</li>
+          <li>Real points, travel times and answer times are not in our data.</li>
+        </ul>
+        <div class="card"><b>How sure are we?</b><br>The wait changed for everyone on release day: 92 out of 95. That the wait alone caused the jump: 45, because the new ranking shipped the same day.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Appendix">
+  <span class="kick">APPENDIX</span>
+  <div class="panel">
+    <h2>Your prompt library, by module</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>Module</th><th>Prompts saved</th><th>Used in this report</th></tr></thead>
+      <tbody id="appx"></tbody>
+    </table></div>
+    <p class="src">Counts read from the six prompts.md files in this repo. Prompt wording is quoted exactly as saved.</p>
+  </div>
+</section>
+
+</main>
+<script>
+(function(){
+var METEOR=[[56.7,"T",1],[63.0,"D",1],[73.2,"T",1],[77.7,"T",1],[114.4,"T",1],[129.0,"D",1],[131.9,"D",0],[134.8,"D",1],[143.6,"T",1],[156.3,"T",1],[162.3,"T",1],[183.3,"T",1],[203.7,"T",1],[209.3,"T",1],[215.0,"T",1],[224.8,"T",1],[235.7,"T",1],[282.3,"D",0],[282.7,"T",1],[308.5,"D",1],[325.4,"T",1],[330.9,"T",1],[336.0,"D",0],[345.2,"T",1],[346.8,"D",1],[355.3,"T",1],[367.6,"D",1],[396.6,"T",1],[453.0,"T",1],[488.8,"T",1],[489.2,"T",1],[501.0,"D",0],[502.8,"D",0],[520.4,"T",1],[522.4,"T",1],[585.8,"M",1],[586.7,"D",1],[595.5,"T",1],[597.3,"T",1],[612.6,"T",1],[617.3,"D",1],[619.2,"D",1],[633.1,"T",1],[634.6,"T",1],[672.8,"T",1],[688.2,"T",1],[690.2,"T",1],[715.1,"T",1],[715.8,"M",1],[718.5,"T",1],[761.2,"T",1],[762.9,"D",0],[765.4,"T",1],[802.2,"T",1],[831.8,"T",1],[835.2,"D",1],[859.6,"T",1],[884.6,"T",1],[901.8,"D",1],[902.9,"T",1],[913.2,"D",0],[913.4,"T",1],[917.0,"D",0],[928.3,"T",1],[967.9,"T",1],[976.9,"T",1],[980.7,"T",1],[1022.1,"D",1],[1029.3,"T",1],[1038.7,"T",1],[1075.1,"D",0],[1093.7,"M",0],[1095.2,"M",1],[1111.4,"M",1],[1143.3,"T",1],[1147.7,"T",1],[1163.3,"M",1],[1207.6,"D",1],[1241.5,"T",1],[1264.7,"M",1],[1316.9,"M",0],[1436.1,"D",0],[1473.3,"M",1],[1647.1,"M",0]];
+var MODS=[
+ {n:"Module 1 · Origin Story",f:"Built the context file: two changes shipped together, an untested seasonal theory.",p:"01 #2 · I just joined Rook Industries as PM for Rook Dispatch. Read everything in 00-rook/company/ ...",ok:true,s:"Saved in 01"},
+ {n:"Module 2 · Super Hearing",f:"45 open tickets in two themes. Tickets and interviews name different heroes.",p:"01 #26 · pull all the tickets and see if it matches the narrative and the data",ok:true,s:"Filed in 01 (02 is empty)"},
+ {n:"Module 3 · Rewind",f:"Missed offers jumped to 28% and 48% on 12 and 13 Aug: a step, not a slide.",p:"01 #6 · give me pre and post 4.2 timelines",ok:true,s:"Filed in 01 (03 is empty)"},
+ {n:"Module 4 · X-Ray Vision",f:"The average hid four heroes who got 3 to 4 offers a week instead of 12.",p:"01 #22 · ok use  the data that is there in pings. Every row is one responder in one week ...",ok:true,s:"Filed in 01 (04 is empty)"},
+ {n:"Module 5 · Super Speed",f:"A one-page brief and a clickable prototype of the fix.",p:"05 #14 · this brief is going to serve as input for working prototype with the fixes. ...",ok:true,s:"Saved in 05"},
+ {n:"Module 6 · Sidekicks",f:"Four skills, one scheduled every Monday, that catch this early.",p:"From the conversation · Make a skill called review-checklist. When I point it at a brief ...",ok:false,s:"Not saved (06 is empty)"}
+];
+var box=document.getElementById("mods");
+MODS.forEach(function(m){var d=document.createElement("div");d.className="mod";d.innerHTML='<b>'+m.n+'</b><div class="t">'+m.f+'</div><div class="t sub" style="margin-top:6px">'+m.p+'</div><span class="st '+(m.ok?"ok":"no")+'">'+m.s+'</span>';box.appendChild(d);});
+var AP=[["01 Origin Story","52","#2, #6, #22, #25, #26, #33, #40"],["02 Super Hearing","0","finding filed under 01"],["03 Rewind","0","finding filed under 01"],["04 X-Ray Vision","0","finding filed under 01"],["05 Super Speed","17","#3, #14"],["06 Sidekicks","0","prompt quoted from the conversation"]];
+document.getElementById("appx").innerHTML=AP.map(function(r){return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+r[2]+"</td></tr>";}).join("");
+var SK=[
+ {n:"quiet-hero-check",d:"Finds heroes who have stopped getting offers or keep missing them.",r:"As of 7 Sep it flags Farlight (15.5 days with no Uptown offer), Meteor Mite (8.6 days), Vesper (5.5 days) and The Undertow (last 3 offers missed)."},
+ {n:"release-impact",d:"Compares before and after for any release and writes a log entry.",r:"On 4.2: the gap after a missed offer went from 92 to 62 seconds for all 16 heroes on release day."},
+ {n:"verify-numbers",d:"Recomputes every figure before it is shared.",r:"Caught that the ticket count was 45, not 43, and a trimmed quote in the brief."},
+ {n:"review-checklist",d:"Checks a brief for an owner, a success measure, a steady scope and the problem before the fix.",r:"On the brief it flagged scope as unclear. Scheduled every Monday morning."}
+];
+var sk=document.getElementById("skills");
+SK.forEach(function(s){var d=document.createElement("div");d.className="skill";d.innerHTML='<b>'+s.n+'</b><div>'+s.d+'</div><div class="r"><span class="tag obs">Result</span>'+s.r+'</div>';sk.appendChild(d);});
+
+function el(id){return document.getElementById(id);}
+function ns(tag,attrs,txt){var e=document.createElementNS("http://www.w3.org/2000/svg",tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(txt!==undefined)e.textContent=txt;return e;}
+function svg(w,h,label){var s=ns("svg",{viewBox:"0 0 "+w+" "+h,role:"img","aria-label":label});return s;}
+function T(s,x,y,txt,o){o=o||{};var t=ns("text",{x:x,y:y,"font-size":o.size||12,"text-anchor":o.anchor||"start",fill:"currentColor","font-weight":o.bold?"700":"400"},txt);s.appendChild(t);return t;}
+function mount(id,s){var c=el(id);c.innerHTML="";c.appendChild(s);}
+
+/* tickets */
+(function(){var w=620,h=250,s=svg(w,h,"Support tickets per week, jumping from about 6 to over 20 after the release");
+ var L=["29 Jun","6 Jul","13 Jul","20 Jul","27 Jul","3 Aug","10 Aug","17 Aug","24 Aug","31 Aug","7 Sep"],V=[6,6,8,5,7,7,20,27,32,25,4],max=35,bw=36,gx=(w-60)/11;
+ [0,10,20,30].forEach(function(v){var y=h-40-v/max*(h-70);s.appendChild(ns("line",{x1:40,x2:w-10,y1:y,y2:y,stroke:"currentColor","stroke-opacity":".18"}));T(s,34,y+4,String(v),{anchor:"end",size:11});});
+ V.forEach(function(v,i){var x=48+i*gx,bh=v/max*(h-70),g=ns("g",{"class":"bar-g"});g.appendChild(ns("rect",{x:x,y:h-40-bh,width:bw,height:bh,fill:i>=6?"#FF7A00":"#378ADD",stroke:"currentColor","stroke-width":2}));s.appendChild(g);T(s,x+bw/2,h-44-bh,String(v),{anchor:"middle",bold:true,size:12});T(s,x+bw/2,h-22,L[i],{anchor:"middle",size:10});});
+ var rx=48+6*gx-5;s.appendChild(ns("line",{x1:rx,x2:rx,y1:10,y2:h-36,stroke:"currentColor","stroke-width":2,"stroke-dasharray":"6 4"}));T(s,rx-4,20,"4.2 ships",{anchor:"end",bold:true,size:12});
+ mount("ch-tickets",s);})();
+
+/* daily missed */
+(function(){var w=900,h=270,s=svg(w,h,"Share of offers missed each day, jumping from about 0 to 5 percent to 28 and 48 percent on 12 and 13 August"),
+ D=[0,5,5,0,3,0,0,3,0,0,4,0,0,5,28,48,27,25,18,4,8,25,21,28,13,24,24,17],L=["29 Jul","","","1 Aug","","","","5 Aug","","","","9 Aug","","","12 Aug","","","15 Aug","","","","19 Aug","","","","23 Aug","","25 Aug"],max=50,bw=22,gx=(w-70)/28;
+ [0,10,20,30,40,50].forEach(function(v){var y=h-40-v/max*(h-70);s.appendChild(ns("line",{x1:50,x2:w-10,y1:y,y2:y,stroke:"currentColor","stroke-opacity":".18"}));T(s,44,y+4,v+"%",{anchor:"end",size:11});});
+ D.forEach(function(v,i){var x=58+i*gx,bh=v/max*(h-70),g=ns("g",{"class":"bar-g"});g.appendChild(ns("rect",{x:x,y:h-40-bh,width:bw,height:Math.max(bh,1),fill:i>=14?"#FF7A00":"#378ADD",stroke:"currentColor","stroke-width":1.5}));s.appendChild(g);if(v>=25)T(s,x+bw/2,h-44-bh,v+"%",{anchor:"middle",bold:true,size:12});if(L[i])T(s,x+bw/2,h-22,L[i],{anchor:"middle",size:10});});
+ var rx=58+14*gx-4;s.appendChild(ns("line",{x1:rx,x2:rx,y1:8,y2:h-38,stroke:"currentColor","stroke-width":2.5,"stroke-dasharray":"6 4"}));T(s,rx-5,18,"4.2 ships",{anchor:"end",bold:true,size:13});
+ mount("ch-daily",s);})();
+
+/* heroes dumbbell */
+(function(){var H=[["Farlight",11.9,3.0],["The Undertow",11.9,3.8],["Vesper",13.7,4.6],["Meteor Mite",11.1,3.8],["Corporal Ashgrove",10.0,7.8],["Halfmoon",11.0,8.9],["Sgt. Bulwark",9.1,10.5],["The Longcast",7.2,8.6],["The Drift",6.2,7.6],["Cindermark",9.1,11.4],["Ironvale",8.1,10.5],["Sgt. Falkirk",10.0,14.1],["Captain Vantage",12.1,15.9],["Stormwrack",13.0,17.0],["The Gale",13.0,18.6],["Nightwell",15.1,18.9]],
+ w=500,h=430,s=svg(w,h,"Offers a week to each of 16 heroes before and after 4.2; four heroes fell sharply"),x0=128,sc=(w-x0-30)/20,quiet={Farlight:1,"The Undertow":1,Vesper:1,"Meteor Mite":1};
+ [0,5,10,15,20].forEach(function(v){var x=x0+v*sc;s.appendChild(ns("line",{x1:x,x2:x,y1:14,y2:h-30,stroke:"currentColor","stroke-opacity":".18"}));T(s,x,h-14,String(v),{anchor:"middle",size:11});});
+ H.forEach(function(r,i){var y=28+i*24,q=quiet[r[0]];T(s,x0-10,y+4,r[0],{anchor:"end",size:12,bold:q});
+  var g=ns("g",{"class":"dot-fade"});g.appendChild(ns("line",{x1:x0+r[1]*sc,x2:x0+r[2]*sc,y1:y,y2:y,stroke:q?"#FF7A00":"#378ADD","stroke-width":q?4:2.5}));
+  g.appendChild(ns("circle",{cx:x0+r[1]*sc,cy:y,r:6,fill:"var(--panel)",stroke:"currentColor","stroke-width":2.5}));
+  g.appendChild(ns("circle",{cx:x0+r[2]*sc,cy:y,r:6,fill:q?"#FF7A00":"#378ADD",stroke:"currentColor","stroke-width":2.5}));s.appendChild(g);});
+ mount("ch-heroes",s);})();
+
+/* Farlight weekly */
+(function(){var w=560,h=260,s=svg(w,h,"Offers to Farlight each week: about 12, then falling to zero"),
+ L=["29 Jun","6 Jul","13 Jul","20 Jul","27 Jul","3 Aug","10-11 Aug","12-16 Aug","17 Aug","24 Aug","31 Aug"],O=[12,12,11,12,13,12,3,7,3,1,0],Y=[9,9,8,9,10,8,2,2,0,0,0],max=14,gx=(w-60)/11,bw=34;
+ [0,5,10].forEach(function(v){var y=h-46-v/max*(h-76);s.appendChild(ns("line",{x1:40,x2:w-8,y1:y,y2:y,stroke:"currentColor","stroke-opacity":".18"}));T(s,34,y+4,String(v),{anchor:"end",size:11});});
+ O.forEach(function(v,i){var x=46+i*gx,bh=v/max*(h-76),yh=Y[i]/max*(h-76),g=ns("g",{"class":"bar-g"});g.appendChild(ns("rect",{x:x,y:h-46-bh,width:bw,height:Math.max(bh,1),fill:"#378ADD",stroke:"currentColor","stroke-width":2}));g.appendChild(ns("rect",{x:x,y:h-46-yh,width:bw,height:Math.max(yh,0),fill:"#FF7A00",stroke:"currentColor","stroke-width":2}));s.appendChild(g);T(s,x+bw/2,h-50-bh,String(v),{anchor:"middle",bold:true,size:12});T(s,x+bw/2,h-30,L[i],{anchor:"middle",size:9});});
+ var rx=46+7*gx-5;s.appendChild(ns("line",{x1:rx,x2:rx,y1:8,y2:h-44,stroke:"currentColor","stroke-width":2,"stroke-dasharray":"6 4"}));T(s,rx-4,18,"4.2 ships",{anchor:"end",bold:true,size:12});
+ mount("ch-farlight",s);})();
+
+/* scoring rule */
+(function(){var w=520,h=300,s=svg(w,h,"A yes adds 0.08 points, a no or a missed offer takes off 0.12, and nothing gives points back");
+ function arrow(x,y1,y2,col,label,sub){s.appendChild(ns("line",{x1:x,x2:x,y1:y1,y2:y2,stroke:col,"stroke-width":14,"stroke-linecap":"round"}));var up=y2<y1;s.appendChild(ns("polygon",{points:(x-20)+","+y2+" "+(x+20)+","+y2+" "+x+","+(y2+(up?-26:26)),fill:col,stroke:"currentColor","stroke-width":2.5}));T(s,x,up?y2-36:y2+48,label,{anchor:"middle",bold:true,size:22});T(s,x,up?y2-16:y2+68,sub,{anchor:"middle",size:12});}
+ arrow(120,170,90,"#0B8A44","+0.08","a yes");arrow(260,130,230,"#B3121A","-0.12","a no or a miss");
+ s.appendChild(ns("rect",{x:350,y:100,width:150,height:110,fill:"var(--chip)",stroke:"currentColor","stroke-width":3}));T(s,425,130,"Points back",{anchor:"middle",bold:true,size:14});T(s,425,152,"over time:",{anchor:"middle",bold:true,size:14});T(s,425,188,"NONE",{anchor:"middle",bold:true,size:26});
+ s.appendChild(ns("line",{x1:20,x2:500,y1:270,y2:270,stroke:"currentColor","stroke-width":2.5}));T(s,20,290,"0%",{size:12});T(s,250,290,"yes-rate needed to stay level: 60%",{anchor:"middle",bold:true,size:13});T(s,500,290,"100%",{anchor:"end",size:12});
+ [[0.6,"#FF7A00","60%"]].forEach(function(m){var x=20+m[0]*480;s.appendChild(ns("circle",{cx:x,cy:270,r:9,fill:m[1],stroke:"currentColor","stroke-width":2.5}));});
+ s.appendChild(ns("circle",{cx:20+0.232*480,cy:270,r:7,fill:"#B3121A",stroke:"currentColor","stroke-width":2.5}));T(s,20+0.232*480,252,"the four: 23%",{anchor:"middle",size:11,bold:true});
+ s.appendChild(ns("circle",{cx:20+0.64*480,cy:270,r:7,fill:"#378ADD",stroke:"currentColor","stroke-width":2.5}));T(s,20+0.64*480+6,252,"everyone: 64%",{anchor:"middle",size:11,bold:true});
+ mount("ch-rule",s);})();
+
+/* flow */
+(function(){var w=900,h=340,s=svg(w,h,"Nine heroes took 86 jobs in the home areas of Old Town, Uptown and Harborside"),
+ G=[["Old Town","Vesper's area",[["Captain Vantage","Hillcrest",14],["Nightwell","Midtown",13],["The Longcast","Lakeshore",4]]],["Uptown","Farlight's area",[["Sgt. Falkirk","Kingsbridge",14],["Cindermark","Mill District",9],["Sgt. Bulwark","Foundry Row",5]]],["Harborside","The Undertow's area",[["Stormwrack","Southport",14],["Ironvale","Riverside",9],["The Drift","Greenway",4]]]],i=0;
+ var rowH=34;
+ G.forEach(function(g,gi){var gy=14+gi*108;
+  s.appendChild(ns("rect",{x:640,y:gy,width:240,height:96,fill:"var(--chip)",stroke:"currentColor","stroke-width":3}));T(s,654,gy+26,g[0],{bold:true,size:20});T(s,654,gy+46,g[1],{size:13});
+  var tot=0;g[2].forEach(function(t){tot+=t[2];});T(s,654,gy+72,tot+" jobs taken by outsiders",{bold:true,size:14});
+  g[2].forEach(function(t,ti){var y=gy+16+ti*28;var ly=24+i*34;
+   var grp=ns("g",{"class":"dot-fade"});
+   grp.appendChild(ns("path",{d:"M300 "+(ly+12)+" C470 "+(ly+12)+",470 "+(gy+48)+",640 "+(gy+30+ti*18),fill:"none",stroke:"#1D9E75","stroke-width":Math.max(2,t[2]*0.9),opacity:".55"}));
+   grp.appendChild(ns("rect",{x:20,y:ly-4,width:280,height:32,fill:"var(--panel)",stroke:"currentColor","stroke-width":2.5}));
+   var tt=ns("text",{x:30,y:ly+17,"font-size":13,fill:"currentColor"});tt.appendChild(ns("tspan",{"font-weight":"700"},t[0]));tt.appendChild(ns("tspan",{},"  ("+t[1]+")  took "+t[2]));grp.appendChild(tt);
+   s.appendChild(grp);i++;});});
+ mount("ch-flow",s);})();
+
+/* loop */
+(function(){var w=760,h=330,s=svg(w,h,"A loop: a release ships, release-impact logs it, quiet-hero-check watches, review-checklist reviews briefs every Monday, verify-numbers checks every figure"),
+ N=[["A release ships",""],["release-impact","logs what changed"],["quiet-hero-check","who has gone quiet?"],["review-checklist","every Monday, on briefs"],["verify-numbers","before anything is shared"]],cx=380,cy=165,rx=290,ry=115;
+ s.appendChild(ns("ellipse",{cx:cx,cy:cy,rx:rx,ry:ry,fill:"none",stroke:"currentColor","stroke-width":4,"stroke-dasharray":"2 10","stroke-linecap":"round"}));
+ N.forEach(function(n,i){var a=-Math.PI/2+i*2*Math.PI/5,x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a),g=ns("g",{"class":"dot-fade"});
+  g.appendChild(ns("rect",{x:x-95,y:y-26,width:190,height:52,fill:i===0?"#FFD60A":"var(--chip)",stroke:"currentColor","stroke-width":3}));
+  var t1=ns("text",{x:x,y:y-4,"text-anchor":"middle","font-size":15,"font-weight":"700",fill:i===0?"#0B1F4B":"currentColor"},n[0]);g.appendChild(t1);
+  if(n[1])g.appendChild(ns("text",{x:x,y:y+15,"text-anchor":"middle","font-size":11,fill:i===0?"#0B1F4B":"currentColor"},n[1]));s.appendChild(g);});
+ T(s,cx,cy+6,"keeps it from",{anchor:"middle",bold:true,size:18});T(s,cx,cy+28,"happening again",{anchor:"middle",bold:true,size:18});
+ mount("ch-loop",s);})();
+
+/* mini prototype */
+(function(){var P=METEOR,TOTAL=1680,REL=1056,MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],BASE=Date.UTC(2026,5,29),rule="A",t=1110;
+ function dstr(h){var d=new Date(BASE+h*3600000);return d.getUTCDate()+" "+MON[d.getUTCMonth()];}
+ function tstr(h){var d=new Date(BASE+h*3600000);return d.getUTCDate()+" "+MON[d.getUTCMonth()]+", "+("0"+d.getUTCHours()).slice(-2)+":00";}
+ function drift(s,days,d){if(d<=0)return s;var m=d*days;if(s>0.5)return Math.max(0.5,s-m);if(s<0.5)return Math.min(0.5,s+m);return s;}
+ function sim(r){var evs=[{h:0,a:Math.max(0.5,r.floor)}],i;for(i=0;i<P.length;i++){var p=P[i],l=evs[evs.length-1],b=Math.max(r.floor,drift(l.a,(p[0]-l.h)/24,r.drift)),s=b;if(p[1]==="T")s+=0.08;else if(p[1]==="D")s-=r.ref;else s-=r.miss;s=Math.max(r.floor,Math.min(1,s));evs.push({h:p[0],a:s,b:b});}
+  function at(x){var k=0,j;for(j=0;j<evs.length;j++){if(evs[j].h<=x)k=j;else break;}return Math.max(r.floor,drift(evs[k].a,(x-evs[k].h)/24,r.drift));}return {evs:evs,at:at,r:r};}
+ var RA={miss:0.12,ref:0.12,drift:0,floor:0},RC={miss:0.03,ref:0.12,drift:0.02,floor:0.3};
+ function quiet(x){var own=0,past=[],i,rs=[];for(i=0;i<P.length;i++){if(P[i][0]<=x){past.push(P[i]);if(P[i][2]===1)own=P[i][0];}else break;}
+  if(x>=72&&x-own>=72)rs.push("no offer in her own area for 3 days");var l3=past.slice(-3);if(l3.length===3&&l3.every(function(q){return q[1]==="M";}))rs.push("last 3 offers missed");return rs;}
+ var flags=[],on=null,x;for(x=0;x<=TOTAL;x++){var r=quiet(x);if(r.length&&!on)on={s:x,e:TOTAL,r:r.join(" and ")};else if(!r.length&&on){on.e=x;flags.push(on);on=null;}}if(on)flags.push(on);
+ function flagAt(x){var i;for(i=0;i<flags.length;i++)if(x>=flags[i].s&&x<flags[i].e)return flags[i];return null;}
+ function firstAfter(){var i;for(i=0;i<flags.length;i++)if(flags[i].e>REL)return Math.ceil(Math.max(flags[i].s,REL)/6)*6;return REL;}
+ var X0=40,X1=560,Y0=14,Y1=170,W=580,H=210;function px(h){return X0+h/TOTAL*(X1-X0);}function py(s){return Y1-s*(Y1-Y0);}
+ function path(sm){var e=sm.evs,r=sm.r,d="M"+px(0)+" "+py(e[0].a),i;for(i=1;i<e.length;i++){var pv=e[i-1];if(r.drift>0&&pv.a!==0.5){var tc=pv.h+Math.abs(pv.a-0.5)/r.drift*24;if(tc<e[i].h&&tc>pv.h)d+=" L"+px(tc)+" "+py(Math.max(r.floor,0.5));}d+=" L"+px(e[i].h)+" "+py(e[i].b)+" L"+px(e[i].h)+" "+py(e[i].a);}return d+" L"+px(TOTAL)+" "+py(sm.at(TOTAL));}
+ var a=sim(RA),c=sim(RC);
+ function draw(){var s=svg(W,H,"Meteor Mite's points over time under today's rules and the chosen rule, with flagged quiet periods");
+  [0,0.5,1].forEach(function(v){s.appendChild(ns("line",{x1:X0,x2:X1,y1:py(v),y2:py(v),stroke:"currentColor","stroke-opacity":".18"}));T(s,X0-6,py(v)+4,v.toFixed(1),{anchor:"end",size:10});});
+  [["29 Jun",0],["27 Jul",28],["24 Aug",56]].forEach(function(l){T(s,px(l[1]*24),Y1+16,l[0],{anchor:"middle",size:10});});
+  flags.forEach(function(f){s.appendChild(ns("rect",{x:px(f.s),y:Y0-4,width:Math.max(2,px(f.e)-px(f.s)),height:Y1-Y0+8,fill:"#FF7A00","fill-opacity":".22",stroke:"#FF7A00","stroke-opacity":".6"}));});
+  s.appendChild(ns("line",{x1:px(REL),x2:px(REL),y1:4,y2:Y1+4,stroke:"currentColor","stroke-width":2,"stroke-dasharray":"5 4"}));T(s,px(REL)-4,12,"4.2",{anchor:"end",bold:true,size:11});
+  s.appendChild(ns("path",{d:path(a),fill:"none",stroke:"#FF7A00","stroke-width":3.2}));
+  if(rule==="C")s.appendChild(ns("path",{d:path(c),fill:"none",stroke:"currentColor","stroke-width":3,"stroke-dasharray":"8 5"}));
+  s.appendChild(ns("line",{x1:px(t),x2:px(t),y1:Y0-6,y2:Y1+4,stroke:"#B3121A","stroke-width":2.5}));
+  var ch=el("ch-proto");ch.innerHTML="";ch.appendChild(s);
+  el("pdlab").textContent=tstr(t);
+  var wk=0,last=null,past=[],i;for(i=0;i<P.length;i++){if(P[i][0]<=t){past.push(P[i]);if(P[i][0]>t-168)wk++;if(P[i][1]==="T")last=P[i][0];}}
+  var pre=0;for(i=0;i<P.length;i++)if(P[i][0]<REL)pre++;var usual=Math.round(pre/(REL/168)),wd={T:"yes",D:"no",M:"missed"},l3=past.slice(-3).map(function(q){return wd[q[1]];}).join(", ")||"none yet",fl=flagAt(t),sm=(rule==="C"?c:a).at(t);
+  el("pbanner").innerHTML='<h3>What Kip sees <span class="sub">(Meteor Mite)</span></h3>'+(fl?'<span class="badge q">Quiet</span>':'<span class="badge ok">OK</span>')+'<dl class="stat"><dt>Offers this week</dt><dd>'+wk+' (usual: about '+usual+')</dd><dt>Last accepted</dt><dd>'+(last===null?"none yet":dstr(last))+'</dd><dt>Last 3 offers</dt><dd>'+l3+'</dd><dt>Points (replay)</dt><dd>'+sm.toFixed(2)+'</dd></dl>'+(fl?'<div class="alert"><b>Meteor Mite has gone quiet.</b><br>Why: '+fl.r+'.<br><b>Check phone &middot; Mark away &middot; Tell Product</b></div>':'<p class="sub">No flag on this date.</p>');
+  el("pphone").innerHTML=fl?'<h3 style="margin-top:10px">What Meteor Mite reads</h3><div class="phone"><div class="bubble">You haven\'t had an offer in Eastgate for a few days. It isn\'t about anything you did. You\'re still in rotation, and we\'re fixing how offers reach you. If your phone has been quiet, tell your handler.</div></div>':'';}
+ el("rA").onclick=function(){rule="A";el("rA").setAttribute("aria-pressed","true");el("rC").setAttribute("aria-pressed","false");draw();};
+ el("rC").onclick=function(){rule="C";el("rC").setAttribute("aria-pressed","true");el("rA").setAttribute("aria-pressed","false");draw();};
+ el("pdate").oninput=function(){t=+el("pdate").value;draw();};
+ el("pjump").onclick=function(){t=firstAfter();el("pdate").value=t;draw();};
+ t=firstAfter();el("pdate").value=t;draw();window.__redrawProto=draw;})();
+
+/* animated counters + slide tracking */
+var slides=Array.prototype.slice.call(document.querySelectorAll(".slide")),dots=el("dots"),cur=0;
+slides.forEach(function(s,i){var a=document.createElement("a");a.href="#";a.title=s.getAttribute("data-title");a.onclick=function(e){e.preventDefault();go(i);};dots.appendChild(a);});
+function go(i){i=Math.max(0,Math.min(slides.length-1,i));slides[i].scrollIntoView({behavior:"smooth"});}
+function setCur(i){cur=i;el("num").textContent=(i+1)+" / "+slides.length;el("prog").style.width=((i+1)/slides.length*100)+"%";Array.prototype.forEach.call(dots.children,function(a,k){a.className=k===i?"on":"";});}
+function count(span){var to=+span.getAttribute("data-to"),dec=+span.getAttribute("data-dec"),t0=null;function step(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/1200);span.textContent=(to*p).toFixed(dec);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");var i=slides.indexOf(e.target);if(i>-1)setCur(i);if(!e.target.__counted){e.target.__counted=true;Array.prototype.forEach.call(e.target.querySelectorAll("[data-to]"),function(sp){if(reduce)sp.textContent=(+sp.getAttribute("data-to")).toFixed(+sp.getAttribute("data-dec"));else count(sp);});}}});},{threshold:0.45});
+slides.forEach(function(s){io.observe(s);});
+setCur(0);
+document.addEventListener("keydown",function(e){if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key==="ArrowRight"||e.key==="ArrowDown"||e.key==="PageDown"){e.preventDefault();go(cur+1);}else if(e.key==="ArrowLeft"||e.key==="ArrowUp"||e.key==="PageUp"){e.preventDefault();go(cur-1);}else if(e.key==="Home"){go(0);}else if(e.key==="End"){go(slides.length-1);}});
+el("next").onclick=function(){go(cur+1);};el("prev").onclick=function(){go(cur-1);};
+(function(){var root=document.documentElement;try{var th=localStorage.getItem("report-theme");if(th==="dark"||th==="light")root.setAttribute("data-theme",th);}catch(e){}
+ el("theme").onclick=function(){var c=root.getAttribute("data-theme")||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),n=c==="dark"?"light":"dark";root.setAttribute("data-theme",n);try{localStorage.setItem("report-theme",n);}catch(e){}if(window.__redrawProto)window.__redrawProto();};})();
+})();
+</script>
+</body>
+</html>

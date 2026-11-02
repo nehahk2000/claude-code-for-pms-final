@@ -223,3 +223,7 @@ down; the config doesn't distinguish. Unanswered.
 **release-impact skill and the 4.2 log entry (sixth session)**
 - New skill: .claude/skills/release-impact. Give it a release date and what changed; it compares before and after in the database (rates per week plus an equal-length check), shows whether every hero switched at once, tests time of day, step against slide and who moved most, counts tickets, and writes an entry in release-log/ with a line in release-log/INDEX.md.
 - First entry: release-log/2026-08-12-4-2-wait-90-to-60.md. Key results: next-offer gap after a missed offer 92s to 62s for all 16 heroes on release day, so no staged test; missed offers 0 to 5% a day then 28% and 48% on 12 and 13 Aug; every time-of-day band rose. The weights shipped the same day, so the wait's own effect cannot be separated (confidence 45 out of 95).
+
+**Final report (sixth session)**
+- final-report.html in the repo root is a 16-slide presentation (keyboard, buttons or scroll) on what 4.2 did and how the skills keep it from recurring. It pairs one finding per module with the exact saved prompt: Module 1 #2, Module 2 #26, Module 3 #6, Module 4 #22 (all filed in 01-origin-story/prompts.md), Module 5 #14 (05-super-speed/prompts.md), and Module 6 quoted from the conversation. The prompt files for Modules 2, 3, 4 and 6 are empty.
+- Correction in release-log/2026-08-12-4-2-wait-90-to-60.md: ten of the other twelve heroes (not eight) got more offers a week after 4.2.
