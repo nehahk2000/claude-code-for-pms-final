@@ -16,7 +16,7 @@ After 4.2, some heroes stopped getting jobs and no one told them or us. Nothing 
 
 ## 3. Decisions we need from other teams
 - **Engineering:** run the "check first" items, build the replay, say if the wait can be set by area.
-- **Support:** answer the 43 open tickets by 29 Oct, Farlight's handler first. I draft, Support sends.
+- **Support:** answer the 45 open tickets by 29 Oct, Farlight's handler first. I draft, Support sends.
 - **Design:** draw Kip's view (draft below).
 
 ## 4. The problem and why it matters
@@ -31,7 +31,7 @@ A missed offer costs a hero 0.12 points, a yes earns 0.08, and points never come
 
 **Farlight's text** (arrives even if offers don't): "You haven't had an offer in Uptown for a few days. It isn't about anything you did. You're still in rotation, and we're fixing how offers reach you. If your phone has been quiet, tell your handler."
 
-**The 2019 question** (Wen: "should this ease back toward NEUTRAL_SCORE on its own?"):
+**The 2019 question** (Wen: "should this ease back toward NEUTRAL_SCORE on its own after a while?"):
 | Option | Effect |
 |---|---|
 | A. Leave it | Heroes keep fading out |
