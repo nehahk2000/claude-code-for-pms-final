@@ -45,6 +45,8 @@ If you cannot tell, say **UNCLEAR** and explain in one line. Don't guess.
 3. **Judge the four checks** using the rules above.
 4. **Report** in the format below.
 
+Don't assume anyone's pronouns. Use names, roles or "they" for heroes, handlers and other people (never he, she, him or her) unless the source states them.
+
 Do not edit, rewrite, rename or save over the brief. If the user asks for fixes afterwards, suggest them in plain words and ask before changing anything.
 
 ## Report format

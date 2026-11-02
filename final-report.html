@@ -270,6 +270,21 @@ input[type=range]{width:100%;accent-color:var(--orange)}
   </div>
 </section>
 
+<section class="slide" data-title="Skill evals">
+  <span class="kick">MODULE 6 &middot; DOES EACH SKILL WORK?</span>
+  <div class="panel">
+    <h2>12 test cases, 67 checks: 63 passed first time, all 67 after three small fixes</h2>
+    <div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:14px">
+      <tr style="text-align:left"><th style="padding:6px 8px">Skill</th><th style="padding:6px 8px">First run</th><th style="padding:6px 8px">What failed</th><th style="padding:6px 8px">Fix</th><th style="padding:6px 8px">After</th></tr>
+      <tr><td style="padding:6px 8px"><b>quiet-hero-check</b></td><td style="padding:6px 8px">20 of 22</td><td style="padding:6px 8px">Said "she/her" for people; left a stray correction note</td><td style="padding:6px 8px">No assumed pronouns; no self-corrections</td><td style="padding:6px 8px">22 of 22</td></tr>
+      <tr><td style="padding:6px 8px"><b>verify-numbers</b></td><td style="padding:6px 8px">15 of 16</td><td style="padding:6px 8px">Gave "43 to 45" tickets, not one number</td><td style="padding:6px 8px">Fixed counting rule, one count</td><td style="padding:6px 8px">16 of 16</td></tr>
+      <tr><td style="padding:6px 8px"><b>release-impact</b></td><td style="padding:6px 8px">10 of 11</td><td style="padding:6px 8px">Did not check the release log for an existing file</td><td style="padding:6px 8px">List the log first; name the exact file</td><td style="padding:6px 8px">11 of 11</td></tr>
+      <tr><td style="padding:6px 8px"><b>review-checklist</b></td><td style="padding:6px 8px">18 of 18</td><td style="padding:6px 8px">Nothing</td><td style="padding:6px 8px">None needed</td><td style="padding:6px 8px">18 of 18</td></tr>
+    </table></div>
+    <p class="src"><span class="tag obs">Real</span>Each case was run by a fresh agent and graded against answers written beforehand (evals/ in this folder). Limits: the right answers come from this made-up dataset, each case ran once, and only the failed cases were rerun.</p>
+  </div>
+</section>
+
 <section class="slide" data-title="The loop">
   <span class="kick">KEEPING IT FROM HAPPENING AGAIN</span>
   <div class="panel">

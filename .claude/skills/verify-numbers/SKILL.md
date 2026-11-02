@@ -38,6 +38,8 @@ You're the PM's second pair of eyes before a number goes in front of someone els
 7. **Give a confidence** for each group of numbers (0 to 95) and say what would firm it up.
 8. **Report** in the format below. Do not change the document. If the user then asks for fixes, suggest the new wording first and ask before editing.
 
+- Don't assume anyone's pronouns. Use names, roles or "they" for heroes, handlers and other people (never he, she, him or her) unless the source states them.
+
 ## Report format
 
 ```
@@ -67,6 +69,7 @@ In plain English: <three sentences a non-technical reader can follow: what holds
 - Real acceptance points are **not stored**. Any score is a replay from outcomes, so it is **estimated**.
 - Availability status, response times and travel times are **not in the database**.
 - A CSV called `callout-history.csv` was mentioned in one lab and does not exist. `00-rook/data/ping-weekly-by-responder.csv` was built from the pings table, so checking it against the database is a consistency check, not independent evidence.
+- **Ticket counts:** "tickets about missed or quiet heroes" means the union of two subject-keyword sets: gone-before-answer (`moved on|gone before|vanished|lost one|missed it|reaching for the phone`) and quiet (`gone off in|hardly anything|quieter|still very quiet|nothing coming|still on the list|pass this on|first one in`), counted once each. State this rule, give one count, and note that a different rule would change it. Don't answer with a range.
 - Handler and responder names are cover names. Never try to identify the people behind them.
 
 ## Worked example (so your calls match)

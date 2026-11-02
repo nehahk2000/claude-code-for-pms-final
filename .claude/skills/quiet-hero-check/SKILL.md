@@ -89,6 +89,9 @@ FINE: <n> heroes.
 ```
 
 Rules for the report:
+- Don't assume anyone's pronouns. Use names, roles or "they" for heroes, handlers and other people (never he, she, him or her) unless the source states them.
+- Give only the final answer. Don't leave self-corrections or drafting notes in the report: if a number is wrong, fix it and move on.
+- Use the same "usual" figure for a hero everywhere in the report.
 - Order QUIET by days without an own-area offer, longest first.
 - Always show the handler's name so the PM knows who to ask.
 - Give counts as numbers, not adjectives.

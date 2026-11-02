@@ -227,3 +227,7 @@ down; the config doesn't distinguish. Unanswered.
 **Final report (sixth session)**
 - final-report.html in the repo root is a 16-slide presentation (keyboard, buttons or scroll) on what 4.2 did and how the skills keep it from recurring. It pairs one finding per module with the exact saved prompt: Module 1 #2, Module 2 #26, Module 3 #6, Module 4 #22 (all filed in 01-origin-story/prompts.md), Module 5 #14 (05-super-speed/prompts.md), and Module 6 quoted from the conversation. The prompt files for Modules 2, 3, 4 and 6 are empty.
 - Correction in release-log/2026-08-12-4-2-wait-90-to-60.md: ten of the other twelve heroes (not eight) got more offers a week after 4.2.
+
+**Skill evals (sixth session)**
+- evals/ holds 12 test cases for the four skills, with answers written beforehand. First run: 63 of 67 checks passed (pronouns assumed, stray correction note, a 43-to-45 ticket range, existing release log not checked). Skills were fixed and the three failed cases rerun: 67 of 67. Results in evals/results.md and on the "Skill evals" slide in final-report.html.
+- Limits: answers come from this fictional dataset; each case ran once; only failed cases were rerun.

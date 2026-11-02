@@ -30,7 +30,7 @@ You're helping the PM for Rook Dispatch see what a release or setting change did
    - **Seasonality:** the data has no earlier year, so say it can't be ruled out.
    - **Other changes shipped the same day:** list every one. If there are others, say the data cannot separate them.
 4. **Triangulate.** Count support tickets by week and theme before and after (query 8) and say whether tickets agree, disagree or are silent. If it helps, check the handler interviews and the wiki release comments.
-5. **Write the log entry** (see below).
+5. **Write the log entry** (see below). First list `release-log/` to see whether a file for this release already exists, and say so in the report. If the user asked for a dry run, write nothing: give the exact file name you would use (with `-v2` added if one exists).
 6. **Report** in the format below.
 
 ## The queries
@@ -184,6 +184,8 @@ Confidence: <0 to 95 per group, and what would firm it up>
 In plain English: <three sentences: what changed, what we can and can't say caused it, what to do next>
 Log: <path to the entry>
 ```
+
+- Don't assume anyone's pronouns. Use names, roles or "they" for heroes, handlers and other people (never he, she, him or her) unless the source states them.
 
 ## Limits to always say
 
